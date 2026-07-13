@@ -22,6 +22,27 @@ if ($action === 'listar') {
     ];
     $ok = $producto->crear($data);
     echo json_encode(['ok'=>$ok]);
+} elseif ($action === 'editar' && $_SERVER['REQUEST_METHOD']==='POST') {
+    $id = (int)($_POST['id'] ?? 0);
+    $data = [
+        'codigo'        => trim($_POST['codigo']),
+        'marca'         => trim($_POST['marca']),
+        'nombre'        => trim($_POST['nombre']),
+        'categoria'     => trim($_POST['categoria']),
+        'peso'          => trim($_POST['peso']),
+        'stock'         => (int)$_POST['stock'],
+        'stock_min'     => (int)$_POST['stock_min'],
+        'precio_compra' => (float)$_POST['precio_compra'],
+        'precio_venta'  => (float)$_POST['precio_venta'],
+    ];
+    echo json_encode(['ok'=>$producto->editar($id, $data)]);
+} elseif ($action === 'stock' && $_SERVER['REQUEST_METHOD']==='POST') {
+    $id = (int)($_POST['id'] ?? 0);
+    $cantidad = (int)($_POST['cantidad'] ?? 0);
+    echo json_encode(['ok'=>$producto->actualizarStock($id, $cantidad)]);
+} elseif ($action === 'eliminar' && $_SERVER['REQUEST_METHOD']==='POST') {
+    $id = (int)($_POST['id'] ?? 0);
+    echo json_encode(['ok'=>$producto->eliminar($id)]);
 } elseif ($action === 'stock') {
     $id = (int)($_GET['id'] ?? 0);
     echo json_encode(['stock'=>$producto->getStockDisponible($id)]);

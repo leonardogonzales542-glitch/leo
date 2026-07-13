@@ -7,7 +7,7 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
-require_once __DIR__ . '/../config/conexion.php';
+require_once __DIR__ . '/../Modelos/Usuario.php';
 
 $action = $_GET['action'] ?? $_POST['action'] ?? '';
 
@@ -40,25 +40,16 @@ if ($action === 'registrar' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $db   = new Database();
-        $conn = $db->getConnection();
+        $usuarioModel = new Usuario();
 
         // Verificar si el correo ya existe
-        $check = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
-        $check->execute([$email]);
-        if ($check->fetch()) {
-            echo json_encode(['ok' => false, 'error' => 'El correo ya está registrado.']);
+        if ($usuarioModel->emailExiste($email)) {
+            echo json_encode(['ok' => false, 'error' => 'El correo electrónico ya está registrado.']);
             exit;
         }
 
-        // Hashear contraseña
-        $hash = password_hash($password, PASSWORD_BCRYPT);
-
-        // Insertar usuario
-        $stmt = $conn->prepare(
-            "INSERT INTO usuarios (nombre, email, password, rol, estado) VALUES (?, ?, ?, ?, 'Activo')"
-        );
-        $ok = $stmt->execute([$nombre, $email, $hash, $rol]);
+        // Registrar usuario
+        $ok = $usuarioModel->registrar($nombre, $email, $password, $rol);
 
         if ($ok) {
             echo json_encode([
@@ -70,10 +61,11 @@ if ($action === 'registrar' && $_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode(['ok' => false, 'error' => 'No se pudo registrar el usuario.']);
         }
 
-    } catch (PDOException $e) {
-        echo json_encode(['ok' => false, 'error' => 'Error de base de datos: ' . $e->getMessage()]);
+    } catch (Exception $e) {
+        echo json_encode(['ok' => false, 'error' => 'Error de servidor: ' . $e->getMessage()]);
     }
 
 } else {
     echo json_encode(['ok' => false, 'error' => 'Acción no válida o método incorrecto.']);
 }
+?>

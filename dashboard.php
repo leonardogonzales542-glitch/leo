@@ -1,25 +1,95 @@
 <?php
-session_start();
+require_once __DIR__ . '/config/auth.php';
+requireLogin('login.php');
+
 require_once __DIR__ . '/Modelos/Producto.php';
 require_once __DIR__ . '/Modelos/Venta.php';
 require_once __DIR__ . '/Modelos/Cliente.php';
 
-$modelProducto = new Producto();
-$modelVenta    = new Venta();
-$modelCliente  = new Cliente();
+// Valores por defecto en caso de error de BD
+$totalProductos  = 0;
+$alertasDetalle  = [];
+$totalAlertas    = 0;
+$ventasHoy       = 0;
+$clientesActivos = 0;
+$todosClientes   = [];
+$todosProductos  = [];
+$todasVentas     = [];
+$db_error        = '';
 
-$totalProductos  = $modelProducto->totalProductos();
-$alertasDetalle  = $modelProducto->alertasStock();
-$totalAlertas    = count($alertasDetalle);
-$ventasHoy       = $modelVenta->ventasHoy();
-$clientesActivos = $modelCliente->totalActivos();
-$todosClientes   = $modelCliente->getAll();
-$todosProductos  = $modelProducto->getAll();
-$todasVentas     = $modelVenta->getAll();
+try {
+    $modelProducto = new Producto();
+    $modelVenta    = new Venta();
+    $modelCliente  = new Cliente();
+
+    $totalProductos  = $modelProducto->totalProductos();
+    $alertasDetalle  = $modelProducto->alertasStock();
+    $totalAlertas    = count($alertasDetalle);
+    $ventasHoy       = $modelVenta->ventasHoy();
+    $clientesActivos = $modelCliente->totalActivos();
+    $todosClientes   = $modelCliente->getAll();
+    $todosProductos  = $modelProducto->getAll();
+    $todasVentas     = $modelVenta->getAll();
+} catch (Exception $e) {
+    $db_error = $e->getMessage();
+    error_log('[Dashboard] Error BD: ' . $e->getMessage());
+}
 
 $meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 $fechaActivo = date('j') . ' ' . $meses[date('n')-1] . ' ' . date('Y') . ' - ' . date('H:i:s');
+
+// Manejar error de autorización
+$auth_error = '';
+if (isset($_SESSION['auth_error'])) {
+    $auth_error = $_SESSION['auth_error'];
+    unset($_SESSION['auth_error']);
+}
 ?>
+<?php if ($db_error): ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Error de Base de Datos – TiendaInsumo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:#f0f4f8;display:flex;align-items:center;justify-content:center;min-height:100vh}
+    .card{background:#fff;border-radius:16px;padding:40px;max-width:560px;width:100%;box-shadow:0 8px 32px rgba(0,0,0,.12);text-align:center}
+    .icon{font-size:3rem;margin-bottom:16px}
+    h2{color:#dc2626;margin-bottom:12px}
+    p{color:#6b7280;margin-bottom:8px;line-height:1.6}
+    code{background:#f3f4f6;padding:2px 8px;border-radius:4px;font-size:.9em}
+    .steps{text-align:left;background:#f9fafb;border-radius:10px;padding:20px;margin:20px 0}
+    .steps li{margin:8px 0;color:#374151}
+    .btn{display:inline-block;margin-top:16px;padding:12px 28px;background:#16a34a;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;transition:.2s}
+    .btn:hover{background:#15803d}
+    .err-detail{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:12px;margin:16px 0;font-size:.85rem;color:#dc2626;text-align:left;word-break:break-all}
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="icon">🔌</div>
+  <h2>Error de conexión a la Base de Datos</h2>
+  <p>El sistema no puede conectarse a MySQL. Sigue estos pasos:</p>
+
+  <div class="err-detail"><?= htmlspecialchars($db_error) ?></div>
+
+  <ol class="steps">
+    <li>Abre <strong>Laragon</strong> y verifica que MySQL esté <span style="color:#16a34a">● activo</span></li>
+    <li>Abre en el navegador: <code>localhost:8080/tiendainsumo/setup.php</code></li>
+    <li>El setup creará la base de datos automáticamente</li>
+    <li>Regresa a esta página</li>
+  </ol>
+
+  <a href="setup.php" class="btn">⚙ Ir a Setup</a>
+  &nbsp;
+  <a href="login.php" class="btn" style="background:#6b7280">← Login</a>
+</div>
+</body>
+</html>
+<?php endif; ?>
+<?php if (!$db_error): ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -56,22 +126,23 @@ $fechaActivo = date('j') . ' ' . $meses[date('n')-1] . ' ' . date('Y') . ' - ' .
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-3">
         <li class="nav-item"><a class="nav-link nav-link-custom active" href="dashboard.php"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link nav-link-custom" href="Vistas/inventario_full.php"><i class="bi bi-box-seam me-1"></i> Inventario</a></li>
-        <li class="nav-item"><a class="nav-link nav-link-custom" href="Vistas/ventas_full.php"><i class="bi bi-cart3 me-1"></i> Ventas</a></li>
-        <li class="nav-item"><a class="nav-link nav-link-custom" href="Vistas/clientes_full.php"><i class="bi bi-people me-1"></i> Clientes</a></li>
-        <li class="nav-item"><a class="nav-link nav-link-custom" href="Controladores/ReporteControlador.php?tipo=inventario"><i class="bi bi-graph-up-arrow me-1"></i> Reporte CSV</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="Vistas/inventario.php"><i class="bi bi-box-seam me-1"></i> Inventario</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="Vistas/ventas.php"><i class="bi bi-cart3 me-1"></i> Ventas</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="Vistas/clientes.php"><i class="bi bi-people me-1"></i> Clientes</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="Vistas/contabilidad_full.php"><i class="bi bi-calculator me-1"></i> Contabilidad</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="Vistas/estadisticas.php"><i class="bi bi-bar-chart-line me-1"></i> Estadísticas</a></li>
       </ul>
       <div class="d-flex align-items-center gap-2">
-        <a href="register_backend.php" class="btn btn-outline-light btn-sm px-3" style="border-radius:8px;font-size:.82rem;"><i class="bi bi-person-plus me-1"></i> Registrarse</a>
-        <a href="login_backend.php" class="btn btn-warning btn-sm px-3 text-dark fw-semibold" style="border-radius:8px;font-size:.82rem;"><i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión</a>
         <div class="dropdown ms-1">
-          <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropUser" data-bs-toggle="dropdown">
+          <a href="#" class="d-block link-light text-decoration-none dropdown-toggle d-flex align-items-center gap-2" id="dropUser" data-bs-toggle="dropdown">
             <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&h=100&q=80" alt="avatar" width="38" height="38" class="rounded-circle border border-2 border-warning">
+            <span class="d-none d-md-inline text-white small fw-medium"><?= htmlspecialchars($_SESSION['user_nombre']) ?></span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0" style="border-radius:.75rem;">
-            <li><span class="dropdown-item-text fw-semibold text-dark">Leonardo González</span></li>
+            <li><span class="dropdown-item-text fw-semibold text-dark"><?= htmlspecialchars($_SESSION['user_nombre']) ?></span></li>
+            <li><span class="dropdown-item-text text-muted small" style="font-size:0.75rem;"><?= ucfirst(htmlspecialchars($_SESSION['user_rol'])) ?></span></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item py-2 text-danger" href="login_backend.php"><i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión</a></li>
+            <li><a class="dropdown-item py-2 text-danger" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión</a></li>
           </ul>
         </div>
       </div>
@@ -100,6 +171,13 @@ $fechaActivo = date('j') . ' ' . $meses[date('n')-1] . ' ' . date('Y') . ' - ' .
 
 <!-- MAIN -->
 <main class="container-fluid px-5 pb-5">
+
+  <?php if (!empty($auth_error)): ?>
+    <div class="alert alert-danger alert-dismissible fade show rounded-3 mb-4 shadow-sm" role="alert">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i> <?= htmlspecialchars($auth_error) ?>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <?php endif; ?>
 
   <!-- MÉTRICAS -->
   <section class="row g-4 mb-5">
@@ -188,12 +266,13 @@ $fechaActivo = date('j') . ' ' . $meses[date('n')-1] . ' ' . date('Y') . ' - ' .
         </div>
       </div>
       <div class="col-6 col-md-3">
-        <div class="action-btn-card action-quick-card" id="btnReporte" onclick="abrirReporte()">
-          <i class="bi bi-file-earmark-bar-graph"></i>
-          <h6 class="fw-bold mb-1">Generar Reporte</h6>
-          <p class="text-muted small mb-0">Exportar a CSV / Excel</p>
+        <div class="action-btn-card action-quick-card" id="btnReporte" onclick="window.location.href='Vistas/contabilidad_full.php'">
+          <i class="bi bi-calculator-fill"></i>
+          <h6 class="fw-bold mb-1">Contabilidad</h6>
+          <p class="text-muted small mb-0">Ingresos, gastos, CxC, CxP</p>
         </div>
       </div>
+      <div class="col-6 col-md-3" style="display:none"><!-- reporte removido --></div>
       <div class="col-6 col-md-3">
         <div class="action-btn-card action-quick-card" data-bs-toggle="modal" data-bs-target="#modalRegistrarCliente">
           <i class="bi bi-person-plus"></i>
@@ -657,3 +736,4 @@ document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el=>new bootstra
 </script>
 </body>
 </html>
+<?php endif; ?>
