@@ -1,0 +1,5 @@
+{
+    "liveServer.settings.port": 5501,
+    "liveServer.settings.file": "/index.html",
+    "php.validate.executablePath": "C:\\laragon\\bin\\php\\php-8.2.x\\php.exe"
+}

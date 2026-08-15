@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Administrativo de Stock y Ventas</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">PurinaStock</div>
+      </div>
+      <nav class="nav-menu" aria-label="Menú principal">
+        <a class="nav-link active" href="#" aria-current="page">Dashboard</a>
+        <a class="nav-link" href="#">Inventario</a>
+        <a class="nav-link" href="#">Ventas</a>
+        <a class="nav-link" href="#">Clientes</a>
+        <a class="nav-link" href="#">Reportes</a>
+      </nav>
+    </aside>
+
+    <main class="main-content" aria-label="Panel administrativo">
+      <header class="topbar">
+        <div>
+          <p class="system-state">Sistema Activo: <strong>09 jun 2026 - 09:37:05</strong></p>
+        </div>
+        <div class="user-card">
+          <div class="user-info">
+            <span>Leonardo González</span>
+            <small>Administrador</small>
+          </div>
+          <div class="user-avatar">LG</div>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Panel Administrativo de Stock y Ventas</p>
+          <h1>Control total y monitoreo de existencias de alimento y purinas para perros de alta calidad.</h1>
+        </div>
+      </section>
+
+      <section class="summary-grid">
+        <article class="summary-card card-brand">
+          <span class="summary-title">Productos en catálogo</span>
+          <h2>148</h2>
+          <p class="summary-meta"><span class="status-positive">+12%</span> respecto al mes anterior</p>
+        </article>
+        <article class="summary-card card-alert">
+          <span class="summary-title">Alertas de stock</span>
+          <h2>4</h2>
+          <p class="summary-meta status-negative">Requiere reabastecimiento urgente</p>
+        </article>
+        <article class="summary-card card-success">
+          <span class="summary-title">Ventas de hoy</span>
+          <h2>$1.250,0k</h2>
+          <p class="summary-meta status-positive">+5,4% en las últimas 24 horas</p>
+        </article>
+        <article class="summary-card card-neutral">
+          <span class="summary-title">Clientes activos</span>
+          <h2>32</h2>
+          <p class="summary-meta">+3 nuevos registrados esta semana</p>
+        </article>
+      </section>
+
+      <section class="quick-actions">
+        <h2>Acciones Rápidas del Sistema</h2>
+        <div class="action-panel">
+          <button type="button" class="action-card"><span>🛒</span><strong>Nueva Venta</strong><small>Registrar salida de stock</small></button>
+          <button type="button" class="action-card"><span>➕</span><strong>Agregar Purina</strong><small>Ingresar nuevo producto</small></button>
+          <button type="button" class="action-card"><span>📄</span><strong>Generar Reporte</strong><small>Exportar stock actual</small></button>
+          <button type="button" class="action-card"><span>👤</span><strong>Registrar Cliente</strong><small>Crear perfil de comprador</small></button>
+        </div>
+      </section>
+
+      <section class="dashboard-panels">
+        <div class="panel panel-table">
+          <div class="panel-heading">
+            <div>
+              <small>Alertas de Stock Crítico</small>
+              <h3>Alimentos y purinas con existencias por debajo del límite mínimo</h3>
+            </div>
+            <button type="button" class="small-button">Ver Todo</button>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Producto</th>
+                  <th>S. Mínimo</th>
+                  <th>S. Actual</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>PUR-DOG-ADU-15</td>
+                  <td><strong>Dog Chow</strong><span>Adultos Medianos y Grandes - Sabor Carne (15 Kg)</span></td>
+                  <td>10 unds</td>
+                  <td>3 unds</td>
+                  <td><span class="badge badge-critical">Crítico</span></td>
+                </tr>
+                <tr>
+                  <td>PUR-PRO-PUP-03</td>
+                  <td><strong>Pro Plan</strong><span>Puppy Razas Pequeñas - Desarrollo Óptimo (3 Kg)</span></td>
+                  <td>5 unds</td>
+                  <td>0 unds</td>
+                  <td><span class="badge badge-out">Agotado</span></td>
+                </tr>
+                <tr>
+                  <td>PUR-EXC-SEN-12</td>
+                  <td><strong>Excellent</strong><span>Adulto Sensitive - Cuidado Especial Piel (12 Kg)</span></td>
+                  <td>8 unds</td>
+                  <td>4 unds</td>
+                  <td><span class="badge badge-critical">Crítico</span></td>
+                </tr>
+                <tr>
+                  <td>PUR-DOG-CACH-22</td>
+                  <td><strong>Dog Chow</strong><span>Cachorros Minis y Pequeños - Vida Sana (22.7 Kg)</span></td>
+                  <td>6 unds</td>
+                  <td>2 unds</td>
+                  <td><span class="badge badge-critical">Crítico</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel panel-list">
+          <div class="panel-heading">
+            <div>
+              <small>Ventas Recientes</small>
+              <h3>Últimos movimientos facturados en el sistema</h3>
+            </div>
+            <button type="button" class="small-button">Ver Historial</button>
+          </div>
+          <div class="sales-list">
+            <article class="sale-item">
+              <div>
+                <p class="sale-code">VTA-00104</p>
+                <p class="sale-time">Hoy, 11:30 AM</p>
+                <p class="sale-detail">Veterinaria San Francisco<br/><span>2x Dog Chow Adulto 15kg, 1x Pro Plan Adulto 15kg</span></p>
+              </div>
+              <div>
+                <span class="badge badge-info">Transferencia</span>
+                <strong>$178,000</strong>
+              </div>
+            </article>
+            <article class="sale-item">
+              <div>
+                <p class="sale-code">VTA-00103</p>
+                <p class="sale-time">Hoy, 09:15 AM</p>
+                <p class="sale-detail">María Clara Restrepo<br/><span>1x Excellent Cachorro 3kg</span></p>
+              </div>
+              <div>
+                <span class="badge badge-success">Efectivo</span>
+                <strong>$22,000</strong>
+              </div>
+            </article>
+            <article class="sale-item">
+              <div>
+                <p class="sale-code">VTA-00102</p>
+                <p class="sale-time">Ayer, 05:40 PM</p>
+                <p class="sale-detail">Pet Shop Huellitas<br/><span>5x Pro Plan Puppy Large Breed 15kg</span></p>
+              </div>
+              <div>
+                <span class="badge badge-primary">Crédito</span>
+                <strong>$485,000</strong>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

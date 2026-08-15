@@ -1,0 +1,215 @@
+<?php
+/**
+ * PurinaStock - Sistema de Control de Inventario y Ventas
+ * Vista: Reportes y Estadísticas
+ */
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - PurinaStock</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="../public/css/style.css">
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center text-white" href="../index.php">
+                <i class="bi bi-dog-fill text-warning me-2 fs-3"></i>
+                <span class="fw-bold">Purina</span><span class="text-warning fw-light">Stock</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-3">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom" href="../index.php">
+                            <i class="bi bi-speedometer2 me-1"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom" href="inventario.php">
+                            <i class="bi bi-box-seam me-1"></i> Inventario
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom" href="ventas.php">
+                            <i class="bi bi-cart3 me-1"></i> Ventas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom" href="clientes.php">
+                            <i class="bi bi-people me-1"></i> Clientes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom active" href="reportes.php">
+                            <i class="bi bi-graph-up-arrow me-1"></i> Reportes
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center text-white">
+                    <div class="text-end me-3 d-none d-sm-block">
+                        <span class="d-block fw-semibold text-white fs-7">Leonardo González</span>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill" style="font-size: 0.7rem;">Administrador</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&h=100&q=80" alt="avatar" width="40" height="40" class="rounded-circle border border-2 border-warning">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <header class="bg-white border-bottom py-3 mb-4">
+        <div class="container-fluid px-5 d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-1">
+                        <li class="breadcrumb-item"><a href="../index.php">Inicio</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Reportes</li>
+                    </ol>
+                </nav>
+                <h3 class="fw-bold mb-0">Análisis y Estadísticas de Rendimiento</h3>
+            </div>
+            <div>
+                <button class="btn btn-outline-dark fw-bold px-4 py-2 rounded-pill shadow-sm" onclick="window.print()">
+                    <i class="bi bi-printer me-2"></i> Imprimir Reporte
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO -->
+    <main class="container-fluid px-5 pb-5">
+        
+        <div class="row g-4 mb-4">
+            <!-- Card 1: Valorización de Inventario -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+                    <h5 class="fw-bold text-dark mb-3"><i class="bi bi-cash-stack text-warning me-2"></i>Valor de Inventario</h5>
+                    <p class="text-muted small">Cálculo en base a costos y precios de venta actuales en catálogo.</p>
+                    <hr>
+                    <div class="mb-3">
+                        <span class="text-muted d-block small">Costo Total Stock Adquirido:</span>
+                        <h4 class="fw-bold text-dark">$6,450,000 COP</h4>
+                    </div>
+                    <div>
+                        <span class="text-muted d-block small">Retorno Estimado de Venta:</span>
+                        <h4 class="fw-bold text-success">$9,120,000 COP</h4>
+                    </div>
+                    <div class="mt-4 p-3 bg-light rounded-3">
+                        <span class="fw-semibold text-primary"><i class="bi bi-graph-up text-success me-1"></i>Margen Estimado: 41.3%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Marcas más vendidas -->
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+                    <h5 class="fw-bold text-dark mb-3"><i class="bi bi-pie-chart text-primary me-2"></i>Participación en Ventas por Marca</h5>
+                    <p class="text-muted small mb-4">Porcentaje de bolsas de purinas despachadas según el fabricante durante este mes.</p>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1 small fw-semibold">
+                            <span>Dog Chow</span>
+                            <span>48% (86 Bolsas)</span>
+                        </div>
+                        <div class="progress rounded-pill" style="height: 10px;">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 48%;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1 small fw-semibold">
+                            <span>Pro Plan</span>
+                            <span>32% (57 Bolsas)</span>
+                        </div>
+                        <div class="progress rounded-pill" style="height: 10px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 32%;" aria-valuenow="32" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1 small fw-semibold">
+                            <span>Excellent</span>
+                            <span>15% (27 Bolsas)</span>
+                        </div>
+                        <div class="progress rounded-pill" style="height: 10px;">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 15%;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="d-flex justify-content-between mb-1 small fw-semibold">
+                            <span>Cat Chow / Otros</span>
+                            <span>5% (9 Bolsas)</span>
+                        </div>
+                        <div class="progress rounded-pill" style="height: 10px;">
+                            <div class="progress-bar bg-secondary" role="progressbar" style="width: 5%;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna de Alertas Adicionales -->
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+            <h5 class="fw-bold text-dark mb-3"><i class="bi bi-clock-history text-danger me-2"></i>Histórico de Vencimiento de Lotes</h5>
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Código Lote</th>
+                            <th>Producto</th>
+                            <th>Fecha Vencimiento</th>
+                            <th>Cantidad Restante</th>
+                            <th>Estado Lote</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-bold">L-PUR-098</td>
+                            <td>Dog Chow Adulto 15Kg</td>
+                            <td>30 Oct 2026</td>
+                            <td>12 bolsas</td>
+                            <td><span class="badge bg-success-subtle text-success rounded-pill px-3 py-1">Vigente</span></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">L-PUR-041</td>
+                            <td>Pro Plan Puppy 3Kg</td>
+                            <td>15 Ago 2026</td>
+                            <td>3 bolsas</td>
+                            <td><span class="badge bg-warning-subtle text-warning rounded-pill px-3 py-1">Por Vencer (Próx. 2 Meses)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-dark text-white-50 py-4 mt-auto border-top border-secondary border-opacity-20">
+        <div class="container-fluid px-5 text-center">
+            <p class="mb-0">&copy; 2026 PurinaStock. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
