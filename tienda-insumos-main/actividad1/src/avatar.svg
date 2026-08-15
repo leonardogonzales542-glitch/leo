@@ -1,0 +1,53 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f093fb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4facfe;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Fondo circular -->
+  <circle cx="100" cy="100" r="95" fill="url(#grad1)" opacity="0.9"/>
+  
+  <!-- Cabeza -->
+  <circle cx="100" cy="85" r="35" fill="#fdbcb4"/>
+  
+  <!-- Cabello -->
+  <path d="M 65 85 Q 65 50 100 50 Q 135 50 135 85" fill="#8b6f47"/>
+  
+  <!-- Orejas -->
+  <circle cx="68" cy="85" r="8" fill="#fdbcb4"/>
+  <circle cx="132" cy="85" r="8" fill="#fdbcb4"/>
+  
+  <!-- Ojos -->
+  <circle cx="90" cy="80" r="4" fill="#333"/>
+  <circle cx="110" cy="80" r="4" fill="#333"/>
+  
+  <!-- Brillo en los ojos -->
+  <circle cx="91" cy="79" r="1.5" fill="white"/>
+  <circle cx="111" cy="79" r="1.5" fill="white"/>
+  
+  <!-- Nariz -->
+  <path d="M 100 80 L 100 88" stroke="#333" stroke-width="1.5" fill="none"/>
+  
+  <!-- Boca sonriente -->
+  <path d="M 90 92 Q 100 98 110 92" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Cuello -->
+  <rect x="92" y="115" width="16" height="12" fill="#fdbcb4"/>
+  
+  <!-- Cuerpo/Hombros -->
+  <ellipse cx="100" cy="140" rx="45" ry="35" fill="url(#grad2)"/>
+  
+  <!-- Brazos -->
+  <ellipse cx="65" cy="135" rx="15" ry="30" fill="#fdbcb4" transform="rotate(-20 65 135)"/>
+  <ellipse cx="135" cy="135" rx="15" ry="30" fill="#fdbcb4" transform="rotate(20 135 135)"/>
+  
+  <!-- Detalles de ropa -->
+  <path d="M 85 130 L 95 145" stroke="url(#grad2)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 115 130 L 105 145" stroke="url(#grad2)" stroke-width="3" stroke-linecap="round"/>
+</svg>

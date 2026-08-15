@@ -1,0 +1,97 @@
+<!-- Imagen de La Candelaria, Bogotá - Basada en la foto compartida -->
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#87ceeb;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#e8f4f8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="wall" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f5f5f5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Cielo -->
+  <rect width="400" height="200" fill="url(#sky)"/>
+  
+  <!-- Nubes -->
+  <ellipse cx="80" cy="50" rx="45" ry="25" fill="white" opacity="0.9"/>
+  <ellipse cx="320" cy="60" rx="40" ry="20" fill="white" opacity="0.8"/>
+  
+  <!-- Iglesia al fondo (Campanario) -->
+  <rect x="175" y="90" width="50" height="110" fill="#c4a57b"/>
+  <polygon points="200,90 225,50 175,50" fill="#a0826d"/>
+  <circle cx="200" cy="100" r="8" fill="#f0e6d2"/>
+  <circle cx="200" cy="120" r="8" fill="#f0e6d2"/>
+  
+  <!-- Edificios coloniales a la izquierda -->
+  <!-- Edificio principal blanco -->
+  <rect x="20" y="140" width="100" height="120" fill="url(#wall)"/>
+  
+  <!-- Balcones coloniales de madera -->
+  <rect x="35" y="125" width="70" height="25" fill="#3d2817" opacity="0.8"/>
+  <line x1="40" y1="130" x2="40" y2="147" stroke="#8b7355" stroke-width="2"/>
+  <line x1="50" y1="130" x2="50" y2="147" stroke="#8b7355" stroke-width="2"/>
+  <line x1="60" y1="130" x2="60" y2="147" stroke="#8b7355" stroke-width="2"/>
+  <line x1="70" y1="130" x2="70" y2="147" stroke="#8b7355" stroke-width="2"/>
+  <line x1="80" y1="130" x2="80" y2="147" stroke="#8b7355" stroke-width="2"/>
+  <line x1="90" y1="130" x2="90" y2="147" stroke="#8b7355" stroke-width="2"/>
+  
+  <!-- Ventanas del edificio -->
+  <rect x="30" y="160" width="12" height="12" fill="#333"/>
+  <rect x="50" y="160" width="12" height="12" fill="#333"/>
+  <rect x="70" y="160" width="12" height="12" fill="#333"/>
+  <rect x="90" y="160" width="12" height="12" fill="#333"/>
+  
+  <rect x="30" y="185" width="12" height="12" fill="#333"/>
+  <rect x="50" y="185" width="12" height="12" fill="#333"/>
+  <rect x="70" y="185" width="12" height="12" fill="#333"/>
+  <rect x="90" y="185" width="12" height="12" fill="#333"/>
+  
+  <rect x="30" y="210" width="12" height="12" fill="#333"/>
+  <rect x="50" y="210" width="12" height="12" fill="#333"/>
+  <rect x="70" y="210" width="12" height="12" fill="#333"/>
+  <rect x="90" y="210" width="12" height="12" fill="#333"/>
+  
+  <!-- Puerta principal -->
+  <rect x="55" y="240" width="20" height="20" fill="#8b4513"/>
+  
+  <!-- Edificio rojo a la derecha -->
+  <rect x="260" y="150" width="90" height="110" fill="#c41e3a"/>
+  
+  <!-- Ventanas del edificio rojo -->
+  <rect x="275" y="165" width="10" height="10" fill="#ffd700"/>
+  <rect x="295" y="165" width="10" height="10" fill="#ffd700"/>
+  <rect x="315" y="165" width="10" height="10" fill="#ffd700"/>
+  <rect x="335" y="165" width="10" height="10" fill="#ffd700"/>
+  
+  <rect x="275" y="185" width="10" height="10" fill="#ffd700"/>
+  <rect x="295" y="185" width="10" height="10" fill="#ffd700"/>
+  <rect x="315" y="185" width="10" height="10" fill="#ffd700"/>
+  <rect x="335" y="185" width="10" height="10" fill="#ffd700"/>
+  
+  <!-- Calle empedrada -->
+  <rect x="0" y="260" width="400" height="40" fill="#999"/>
+  <line x1="0" y1="270" x2="400" y2="270" stroke="#666" stroke-width="1" stroke-dasharray="5,5"/>
+  
+  <!-- Personas en la calle -->
+  <circle cx="150" cy="240" r="5" fill="#333"/>
+  <rect x="147" y="248" width="6" height="12" fill="#333"/>
+  
+  <circle cx="250" cy="240" r="5" fill="#333"/>
+  <rect x="247" y="248" width="6" height="12" fill="#333"/>
+  
+  <circle cx="320" cy="245" r="5" fill="#e8f4f8"/>
+  <rect x="317" y="253" width="6" height="12" fill="#e0f0f5"/>
+  
+  <!-- Señal de tránsito -->
+  <rect x="360" y="200" width="3" height="50" fill="#333"/>
+  <polygon points="360,200 375,185 390,200" fill="#FFD700"/>
+  <circle cx="377" cy="193" r="4" fill="#333"/>
+  <circle cx="382" cy="193" r="4" fill="#333"/>
+  
+  <!-- Texto -->
+  <text x="200" y="295" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">
+    La Candelaria - Bogotá
+  </text>
+</svg>
