@@ -10,6 +10,13 @@ if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['id_rol'] != 1) {
 
 $ventaModel = new Venta($conn);
 $action = isset($_GET['action']) ? $_GET['action'] : (isset($_POST['action']) ? $_POST['action'] : '');
+if (empty($action)) {
+    $json_input = file_get_contents('php://input');
+    $json_data = json_decode($json_input, true);
+    if (isset($json_data['action'])) {
+        $action = $json_data['action'];
+    }
+}
 
 // Petición AJAX para buscar clientes
 if ($action === 'search_client') {

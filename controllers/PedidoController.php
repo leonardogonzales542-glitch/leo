@@ -11,6 +11,15 @@ if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['id_rol'] != 1) {
 $pedidoModel = new Pedido($conn);
 $action = isset($_GET['action']) ? $_GET['action'] : (isset($_POST['action']) ? $_POST['action'] : '');
 
+// Attempt to parse action from JSON input if empty
+if (empty($action)) {
+    $json_input = file_get_contents('php://input');
+    $json_data = json_decode($json_input, true);
+    if (isset($json_data['action'])) {
+        $action = $json_data['action'];
+    }
+}
+
 // Petición AJAX para buscar clientes
 if ($action === 'search_client') {
     $q = isset($_GET['q']) ? $conn->real_escape_string($_GET['q']) : '';
