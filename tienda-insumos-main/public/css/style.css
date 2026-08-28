@@ -456,3 +456,98 @@ table.dataTable thead th {
     background-color: #ef4444;
     box-shadow: 0 0 6px rgba(239, 68, 68, 0.4);
 }
+
+/* Custom Sleek Dark Mode Overrides */
+[data-bs-theme="dark"] body,
+[data-bs-theme="dark"] main {
+    background-color: #121212 !important;
+    color: #e4e4e7 !important;
+}
+
+[data-bs-theme="dark"] aside,
+[data-bs-theme="dark"] header {
+    background-color: #18181b !important;
+    border-color: #27272a !important;
+}
+
+[data-bs-theme="dark"] .bg-body-tertiary,
+[data-bs-theme="dark"] .metric-card,
+[data-bs-theme="dark"] .card {
+    background-color: #27272a !important;
+    border-color: #3f3f46 !important;
+    color: #e4e4e7 !important;
+}
+
+[data-bs-theme="dark"] .sidebar-link {
+    color: #a1a1aa !important;
+}
+
+[data-bs-theme="dark"] .sidebar-link.active {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    border-left-color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] .sidebar-link:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] .table {
+    color: #e4e4e7 !important;
+}
+
+[data-bs-theme="dark"] .table td, 
+[data-bs-theme="dark"] .table th {
+    border-color: #3f3f46 !important;
+    background-color: transparent !important;
+    color: #e4e4e7 !important;
+}
+
+[data-bs-theme="dark"] table.dataTable thead th {
+    border-bottom: 2px solid #3f3f46 !important;
+    color: #a1a1aa !important;
+}
+
+[data-bs-theme="dark"] table.dataTable.table-hover > tbody > tr:hover > * {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    box-shadow: none !important;
+}
+
+[data-bs-theme="dark"] .dataTables_wrapper .dataTables_filter input,
+[data-bs-theme="dark"] .dataTables_wrapper .dataTables_length select {
+    background-color: #18181b !important;
+    border-color: #3f3f46 !important;
+    color: #e4e4e7 !important;
+}
+
+[data-bs-theme="dark"] .dataTables_wrapper .dataTables_filter input:focus,
+[data-bs-theme="dark"] .dataTables_wrapper .dataTables_length select:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2) !important;
+}
+
+[data-bs-theme="dark"] .page-item .page-link {
+    color: #e4e4e7 !important;
+    background-color: transparent !important;
+}
+
+[data-bs-theme="dark"] .page-item.active .page-link {
+    background: var(--primary) !important;
+    color: #fff !important;
+}
+
+[data-bs-theme="dark"] .text-dark,
+[data-bs-theme="dark"] .text-muted {
+    color: #a1a1aa !important;
+}
+
+[data-bs-theme="dark"] .text-body,
+[data-bs-theme="dark"] h1, 
+[data-bs-theme="dark"] h2, 
+[data-bs-theme="dark"] h3, 
+[data-bs-theme="dark"] h4, 
+[data-bs-theme="dark"] h5, 
+[data-bs-theme="dark"] h6 {
+    color: #ffffff !important;
+}

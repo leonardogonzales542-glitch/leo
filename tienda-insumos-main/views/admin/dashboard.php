@@ -39,11 +39,11 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
 
 <style>
 .metric-card {
-    background: white;
+    background-color: var(--bs-body-bg);
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-    transition: transform 0.2s, box-shadow 0.2s;
-    border: 1px solid #f8fafc;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
+    border: 1px solid var(--bs-border-color-translucent);
 }
 .metric-card:hover {
     transform: translateY(-3px);
@@ -107,7 +107,7 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
                     <span class="badge bg-success bg-opacity-10 text-success rounded-pill border border-success border-opacity-10">+5% mes</span>
                 </div>
                 <h6 class="text-muted fw-semibold mb-1" style="font-size: 0.85rem;">Ingresos Totales</h6>
-                <h3 class="fw-bold text-dark mb-0">$<?= number_format($montoVentas, 2, ',', '.') ?></h3>
+                <h3 class="fw-bold text-body mb-0">$<?= number_format($montoVentas, 2, ',', '.') ?></h3>
                 <span class="text-muted" style="font-size: 0.75rem;"><?= $cantidadVentas ?> ventas realizadas</span>
             </div>
         </div>
@@ -121,7 +121,7 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
                     </div>
                 </div>
                 <h6 class="text-muted fw-semibold mb-1" style="font-size: 0.85rem;">Pedidos Registrados</h6>
-                <h3 class="fw-bold text-dark mb-0"><?= $totalPedidos ?></h3>
+                <h3 class="fw-bold text-body mb-0"><?= $totalPedidos ?></h3>
                 <span class="text-muted" style="font-size: 0.75rem;">En cola de procesamiento</span>
             </div>
         </div>
@@ -135,7 +135,7 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
                     </div>
                 </div>
                 <h6 class="text-muted fw-semibold mb-1" style="font-size: 0.85rem;">Clientes Activos</h6>
-                <h3 class="fw-bold text-dark mb-0"><?= $totalClientes ?></h3>
+                <h3 class="fw-bold text-body mb-0"><?= $totalClientes ?></h3>
                 <span class="text-muted" style="font-size: 0.75rem;">En la base de datos</span>
             </div>
         </div>
@@ -149,7 +149,7 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
                     </div>
                 </div>
                 <h6 class="text-muted fw-semibold mb-1" style="font-size: 0.85rem;">Productos Catálogo</h6>
-                <h3 class="fw-bold text-dark mb-0"><?= $totalProductos ?></h3>
+                <h3 class="fw-bold text-body mb-0"><?= $totalProductos ?></h3>
                 <span class="text-muted" style="font-size: 0.75rem;">Listos para la venta</span>
             </div>
         </div>
@@ -160,30 +160,30 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
         <!-- Accesos Rápidos -->
         <div class="col-12 col-lg-7">
             <div class="metric-card p-4 h-100">
-                <h5 class="fw-bold text-dark mb-4" style="font-size: 1.1rem;">Accesos Rápidos</h5>
+                <h5 class="fw-bold text-body mb-4" style="font-size: 1.1rem;">Accesos Rápidos</h5>
                 <div class="row g-3">
                     <div class="col-6 col-md-4">
-                        <a href="ventas.php" class="btn btn-light w-100 quick-action-btn text-dark border shadow-sm hover-primary">
+                        <a href="ventas.php" class="btn w-100 quick-action-btn shadow-sm" style="background-color: var(--bs-tertiary-bg); color: var(--bs-body-color); border: 1px solid var(--bs-border-color);">
                             <i class="fa-solid fa-cart-plus text-primary"></i> Nueva Venta
                         </a>
                     </div>
                     <div class="col-6 col-md-4">
-                        <a href="agregar_producto.php" class="btn btn-light w-100 quick-action-btn text-dark border shadow-sm">
+                        <a href="agregar_producto.php" class="btn w-100 quick-action-btn shadow-sm" style="background-color: var(--bs-tertiary-bg); color: var(--bs-body-color); border: 1px solid var(--bs-border-color);">
                             <i class="fa-solid fa-plus-circle text-success"></i> Crear Producto
                         </a>
                     </div>
                     <div class="col-6 col-md-4">
-                        <a href="clientes.php" class="btn btn-light w-100 quick-action-btn text-dark border shadow-sm">
+                        <a href="clientes.php" class="btn w-100 quick-action-btn shadow-sm" style="background-color: var(--bs-tertiary-bg); color: var(--bs-body-color); border: 1px solid var(--bs-border-color);">
                             <i class="fa-solid fa-user-plus text-warning"></i> Nuevo Cliente
                         </a>
                     </div>
                     <div class="col-6 col-md-4">
-                        <a href="pedidos.php" class="btn btn-light w-100 quick-action-btn text-dark border shadow-sm">
+                        <a href="pedidos.php" class="btn w-100 quick-action-btn shadow-sm" style="background-color: var(--bs-tertiary-bg); color: var(--bs-body-color); border: 1px solid var(--bs-border-color);">
                             <i class="fa-solid fa-box-open text-info"></i> Ver Pedidos
                         </a>
                     </div>
                     <div class="col-6 col-md-4">
-                        <a href="reportes.php" class="btn btn-light w-100 quick-action-btn text-dark border shadow-sm">
+                        <a href="reportes.php" class="btn w-100 quick-action-btn shadow-sm" style="background-color: var(--bs-tertiary-bg); color: var(--bs-body-color); border: 1px solid var(--bs-border-color);">
                             <i class="fa-solid fa-chart-line text-danger"></i> Reportes
                         </a>
                     </div>
