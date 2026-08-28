@@ -144,7 +144,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 function setDarkMode(isDark) {
                     if (isDark) {
                         document.documentElement.setAttribute('data-bs-theme', 'dark');
-                        text.innerText = 'TEMA OSCURO';
+                        text.innerText = 'TEMA CLARO';
                         circle.className = 'rounded-circle border shadow-sm bg-light';
                         icon.className = 'fa-solid fa-sun';
                         
@@ -163,7 +163,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         });
                     } else {
                         document.documentElement.setAttribute('data-bs-theme', 'light');
-                        text.innerText = 'TEMA CLARO';
+                        text.innerText = 'TEMA OSCURO';
                         circle.className = 'rounded-circle border shadow-sm bg-dark';
                         icon.className = 'fa-solid fa-moon';
                         
