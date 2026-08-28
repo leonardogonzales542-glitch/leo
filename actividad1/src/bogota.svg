@@ -1,0 +1,76 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#87ceeb;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#e0f6ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffccaa;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="mountainGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b7355;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5a4a3a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="buildingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c41e3a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b1529;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Cielo -->
+  <rect width="400" height="300" fill="url(#skyGradient)"/>
+  
+  <!-- Nubes -->
+  <ellipse cx="80" cy="50" rx="40" ry="20" fill="white" opacity="0.8"/>
+  <ellipse cx="110" cy="55" rx="35" ry="18" fill="white" opacity="0.8"/>
+  <ellipse cx="320" cy="40" rx="50" ry="22" fill="white" opacity="0.7"/>
+  <ellipse cx="360" cy="48" rx="40" ry="20" fill="white" opacity="0.7"/>
+  
+  <!-- Montañas de Bogotá (Los Monserrate y Guadalupe) -->
+  <path d="M 50 200 L 120 80 L 180 200 Z" fill="url(#mountainGradient)"/>
+  <path d="M 280 200 L 340 90 L 380 200 Z" fill="url(#mountainGradient)"/>
+  
+  <!-- Vegetación en montañas -->
+  <circle cx="110" cy="130" r="15" fill="#2d5016" opacity="0.6"/>
+  <circle cx="130" cy="145" r="12" fill="#2d5016" opacity="0.6"/>
+  <circle cx="330" cy="140" r="18" fill="#2d5016" opacity="0.6"/>
+  <circle cx="350" cy="155" r="14" fill="#2d5016" opacity="0.6"/>
+  
+  <!-- Línea del horizonte -->
+  <line x1="0" y1="200" x2="400" y2="200" stroke="#d4a574" stroke-width="2"/>
+  
+  <!-- Edificios del Centro Histórico (Candelaria) -->
+  <!-- Edificio 1 (rojo colonial) -->
+  <rect x="140" y="160" width="50" height="60" fill="url(#buildingGradient)"/>
+  <rect x="145" y="165" width="8" height="8" fill="#ffe4b5"/>
+  <rect x="160" y="165" width="8" height="8" fill="#ffe4b5"/>
+  <rect x="175" y="165" width="8" height="8" fill="#ffe4b5"/>
+  <rect x="145" y="180" width="8" height="8" fill="#ffe4b5"/>
+  <rect x="160" y="180" width="8" height="8" fill="#ffe4b5"/>
+  <rect x="175" y="180" width="8" height="8" fill="#ffe4b5"/>
+  
+  <!-- Edificio 2 (arquitectura colonial) -->
+  <rect x="200" y="165" width="45" height="55" fill="#b32041"/>
+  <rect x="205" y="170" width="7" height="7" fill="#ffe4b5"/>
+  <rect x="218" y="170" width="7" height="7" fill="#ffe4b5"/>
+  <rect x="231" y="170" width="7" height="7" fill="#ffe4b5"/>
+  <rect x="205" y="183" width="7" height="7" fill="#ffe4b5"/>
+  <rect x="218" y="183" width="7" height="7" fill="#ffe4b5"/>
+  <rect x="231" y="183" width="7" height="7" fill="#ffe4b5"/>
+  
+  <!-- Torre colonial (Campanario) -->
+  <rect x="245" y="130" width="30" height="90" fill="#8b3a3a"/>
+  <polygon points="245,130 260,100 275,130" fill="#d4a574"/>
+  <rect x="250" y="140" width="5" height="5" fill="#ffe4b5"/>
+  <rect x="260" y="140" width="5" height="5" fill="#ffe4b5"/>
+  <rect x="250" y="155" width="5" height="5" fill="#ffe4b5"/>
+  <rect x="260" y="155" width="5" height="5" fill="#ffe4b5"/>
+  <rect x="250" y="170" width="5" height="5" fill="#ffe4b5"/>
+  <rect x="260" y="170" width="5" height="5" fill="#ffe4b5"/>
+  
+  <!-- Plaza (piso) -->
+  <rect x="100" y="220" width="200" height="15" fill="#c9a876" opacity="0.7"/>
+  
+  <!-- Texto decorativo -->
+  <text x="200" y="280" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">
+    Bogotá - Espíritu de América
+  </text>
+</svg>
