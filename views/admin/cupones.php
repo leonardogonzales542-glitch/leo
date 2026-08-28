@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['id_rol'] != 1) {
-    header('Location: ../../views/auth/login.php');
+    header('Location: ../../public/index.php');
     exit;
 }
 require_once __DIR__ . '/../../config/database.php';

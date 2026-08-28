@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['usuario'])) {
-    header('Location: ../../views/auth/login.php');
+    header('Location: ../../public/index.php');
     exit;
 }
 
