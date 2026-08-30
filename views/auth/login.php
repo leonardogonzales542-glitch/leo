@@ -14,18 +14,23 @@ session_start();
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom Style Sheet -->
-    <link href="../../public/css/style.css" rel="stylesheet">
+    <link href="../../public/css/style.css?v=<?php echo time(); ?>" rel="stylesheet">
     <!-- Framework Sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="auth-page">
 
     <div class="auth-card">
+        <!-- Back Link -->
+        <a href="../../index.php" class="text-decoration-none text-secondary small d-inline-block mb-3" style="font-weight: 500;">
+            <i class="bi bi-arrow-left me-1"></i> Volver a AgriStock
+        </a>
+
         <!-- Logo -->
         <div class="text-center mb-4">
-            <a class="text-success fw-bold text-decoration-none fs-2 d-inline-flex align-items-center mb-2" href="../../public/index.php">
+            <h1 class="text-success fw-bold text-decoration-none fs-2 d-inline-flex align-items-center mb-2">
                 <i class="bi bi-patch-check-fill text-success me-2"></i>AgriStock
-            </a>
+            </h1>
             <h4 class="fw-bold mb-1 text-white">¡Bienvenido de nuevo!</h4>
             <p class="auth-subtitle small">Ingresa tus credenciales para acceder al sistema</p>
         </div>
@@ -37,7 +42,7 @@ session_start();
                 <label for="email" class="form-label-premium">Correo Electrónico</label>
                 <div class="input-group input-group-premium">
                     <span class="input-group-text input-group-text-premium"><i class="bi bi-envelope"></i></span>
-                    <input type="email" class="form-control form-control-premium" id="email" name="email" placeholder="nombre@ejemplo.com" required autocomplete="email">
+                    <input type="email" class="form-control form-control-premium" id="email" name="email" placeholder="admin@agristock.com" required autocomplete="email">
                     <div class="invalid-feedback">Por favor ingresa un correo electrónico válido.</div>
                 </div>
             </div>
@@ -65,13 +70,6 @@ session_start();
             <button type="submit" class="btn btn-premium btn-premium-primary w-100 py-3 mb-3">
                 Iniciar Sesión <i class="bi bi-box-arrow-in-right ms-2"></i>
             </button>
-
-            <!-- Register Link -->
-            <div class="text-center">
-                <p class="text-secondary small mb-0">
-                    ¿No tienes una cuenta? <a href="register.php" class="text-link">Regístrate aquí</a>
-                </p>
-            </div>
         </form>
     </div>
 

@@ -125,7 +125,7 @@ require_once __DIR__ . '/../layouts/header.php';
             </li>
         </ul>
         <hr class="text-secondary">
-        <a href="../../controllers/auth/authController.php?action=logout" class="nav-link text-danger fw-semibold d-flex align-items-center">
+        <a href="../../controllers/auth/authController.php?accion=logout" class="nav-link text-danger fw-semibold d-flex align-items-center">
             <i class="fas fa-sign-out-alt me-3"></i> Cerrar Sesión
         </a>
     </div>

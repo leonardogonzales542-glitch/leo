@@ -96,7 +96,7 @@ class AuthController
     {  // cerrar sesion
         session_unset();
         session_destroy();
-        header('Location: ../../public/index.php');
+        header('Location: ../../index.php');
         exit;
     }
 }

@@ -202,7 +202,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 </div>
             </div>
             
-            <a href="../../controllers/auth/authController.php?action=logout" class="text-danger ms-2" title="Cerrar sesión">
+            <a href="../../controllers/auth/authController.php?accion=logout" class="text-danger ms-2" title="Cerrar sesión">
                 <i class="fa-solid fa-power-off fs-5"></i>
             </a>
         </div>
