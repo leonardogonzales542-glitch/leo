@@ -7,6 +7,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['id_rol'] != 1) {
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../models/producto.php';
 require_once __DIR__ . '/../../models/categoria.php';
+require_once __DIR__ . '/../../models/proveedor.php';
 
 $productoModel = new Producto($conn);
 $categoriaModel = new Categoria($conn);
@@ -28,6 +29,9 @@ if ($categorias && $categorias->num_rows > 0) {
         $categoriasList[] = $c;
     }
 }
+
+$proveedores = Proveedor::obtenerTodos();
+$proveedoresList = is_array($proveedores) ? $proveedores : [];
 
 $titulo = 'Gestión de Inventario';
 require_once __DIR__ . '/../layouts/header.php';
@@ -72,7 +76,7 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
                     <tr>
                         <th class="px-4 py-3 text-muted" style="font-weight: 600; font-size: 0.8rem;">CÓDIGO</th>
                         <th class="px-4 py-3 text-muted" style="font-weight: 600; font-size: 0.8rem;">PRODUCTO</th>
-                        <th class="px-4 py-3 text-muted" style="font-weight: 600; font-size: 0.8rem;">CATEGORÍA</th>
+                        <th class="px-4 py-3 text-muted" style="font-weight: 600; font-size: 0.8rem;">CATEGORÍA/PROV.</th>
                         <th class="px-4 py-3 text-muted" style="font-weight: 600; font-size: 0.8rem;">PRECIO V.</th>
                         <th class="px-4 py-3 text-muted" style="font-weight: 600; font-size: 0.8rem;">STOCK</th>
                         <th class="px-4 py-3 text-muted" style="font-weight: 600; font-size: 0.8rem;">ESTADO</th>
@@ -101,7 +105,10 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
                                         <?= htmlspecialchars($p['nombre']) ?>
                                     </div>
                                 </td>
-                                <td class="px-4 py-3 text-muted small"><?= htmlspecialchars($p['categoria_nombre'] ?? 'Sin categoría') ?></td>
+                                <td class="px-4 py-3 text-muted small">
+                                    <?= htmlspecialchars($p['categoria_nombre'] ?? 'Sin categoría') ?><br>
+                                    <span class="text-secondary" style="font-size: 0.75rem;"><i class="fa-solid fa-truck me-1"></i><?= htmlspecialchars($p['proveedor_nombre'] ?? 'Sin proveedor') ?></span>
+                                </td>
                                 <td class="px-4 py-3 fw-bold text-success">$<?= number_format($p['precio_venta'], 2, ',', '.') ?></td>
                                 <td class="px-4 py-3">
                                     <span class="badge bg-<?= $stockStatusClass ?> bg-opacity-10 text-<?= $stockStatusClass ?> border border-<?= $stockStatusClass ?> border-opacity-25 rounded-pill px-2 py-1">
@@ -148,7 +155,7 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
                                                         <input type="text" class="form-control bg-light rounded-3" name="nombre" value="<?= htmlspecialchars($p['nombre']) ?>" required>
                                                     </div>
                                                     
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <label class="form-label fw-semibold text-muted small">Categoría</label>
                                                         <select class="form-select bg-light rounded-3" name="id_categoria" required>
                                                             <?php foreach($categoriasList as $cat): ?>
@@ -156,8 +163,17 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
                                                             <?php endforeach; ?>
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label fw-semibold text-muted small">Unidad de Medida (ej. Kg, Lts, Und)</label>
+                                                    <div class="col-md-4">
+                                                        <label class="form-label fw-semibold text-muted small">Proveedor</label>
+                                                        <select class="form-select bg-light rounded-3" name="id_proveedor">
+                                                            <option value="">Sin proveedor</option>
+                                                            <?php foreach($proveedoresList as $prov): ?>
+                                                                <option value="<?= $prov['id_proveedor'] ?>" <?= (isset($p['id_proveedor']) && $p['id_proveedor'] == $prov['id_proveedor']) ? 'selected' : '' ?>><?= htmlspecialchars($prov['razon_social']) ?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label class="form-label fw-semibold text-muted small">Unidad (ej. Kg, Und)</label>
                                                         <input type="text" class="form-control bg-light rounded-3" name="unidad_medida" value="<?= htmlspecialchars($p['unidad_medida']) ?>" required>
                                                     </div>
 

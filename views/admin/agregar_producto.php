@@ -6,6 +6,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['id_rol'] != 1) {
 }
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../models/categoria.php';
+require_once __DIR__ . '/../../models/proveedor.php';
 
 $categoriaModel = new Categoria($conn);
 $categorias = $categoriaModel->getAll();
@@ -15,6 +16,9 @@ if ($categorias && $categorias->num_rows > 0) {
         $categoriasList[] = $c;
     }
 }
+
+$proveedores = Proveedor::obtenerTodos();
+$proveedoresList = is_array($proveedores) ? $proveedores : [];
 
 $titulo = 'Agregar Producto';
 require_once __DIR__ . '/../layouts/header.php';
@@ -64,7 +68,7 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
                         <input type="text" class="form-control bg-light rounded-3" name="nombre" placeholder="Ej. Abono Orgánico 50Kg" required>
                     </div>
                     
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label class="form-label fw-semibold text-muted small">Categoría *</label>
                         <select class="form-select bg-light rounded-3" name="id_categoria" required>
                             <option value="">Selecciona una categoría...</option>
@@ -76,7 +80,16 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
                             <div class="form-text text-danger mt-1"><i class="fa-solid fa-circle-exclamation me-1"></i>Debes crear una categoría primero.</div>
                         <?php endif; ?>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold text-muted small">Proveedor</label>
+                        <select class="form-select bg-light rounded-3" name="id_proveedor">
+                            <option value="">Sin proveedor específico</option>
+                            <?php foreach($proveedoresList as $prov): ?>
+                                <option value="<?= $prov['id_proveedor'] ?>"><?= htmlspecialchars($prov['razon_social']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
                         <label class="form-label fw-semibold text-muted small">Unidad de Medida *</label>
                         <input type="text" class="form-control bg-light rounded-3" name="unidad_medida" placeholder="Ej. Kg, Litros, Unidad" required>
                     </div>

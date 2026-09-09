@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $codigo = trim($_POST['codigo']);
         $nombre = trim($_POST['nombre']);
         $id_categoria = (int)$_POST['id_categoria'];
+        $id_proveedor = !empty($_POST['id_proveedor']) ? (int)$_POST['id_proveedor'] : null;
         $descripcion = trim($_POST['descripcion']);
         $unidad_medida = trim($_POST['unidad_medida']);
         $precio_compra = (float)$_POST['precio_compra'];
@@ -33,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         try {
-            if ($productoModel->create($codigo, $nombre, $id_categoria, $descripcion, $unidad_medida, $precio_compra, $precio_venta, $stock_actual, $stock_minimo, $imagen_nombre)) {
+            if ($productoModel->create($codigo, $nombre, $id_categoria, $id_proveedor, $descripcion, $unidad_medida, $precio_compra, $precio_venta, $stock_actual, $stock_minimo, $imagen_nombre)) {
                 $_SESSION['success'] = "Producto '$nombre' creado correctamente.";
                 header('Location: ../views/admin/inventario.php');
                 exit;
@@ -50,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $codigo = trim($_POST['codigo']);
         $nombre = trim($_POST['nombre']);
         $id_categoria = (int)$_POST['id_categoria'];
+        $id_proveedor = !empty($_POST['id_proveedor']) ? (int)$_POST['id_proveedor'] : null;
         $descripcion = trim($_POST['descripcion']);
         $unidad_medida = trim($_POST['unidad_medida']);
         $precio_compra = (float)$_POST['precio_compra'];
@@ -68,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         try {
-            if ($productoModel->update($id, $codigo, $nombre, $id_categoria, $descripcion, $unidad_medida, $precio_compra, $precio_venta, $stock_actual, $stock_minimo, $estado, $imagen_nombre)) {
+            if ($productoModel->update($id, $codigo, $nombre, $id_categoria, $id_proveedor, $descripcion, $unidad_medida, $precio_compra, $precio_venta, $stock_actual, $stock_minimo, $estado, $imagen_nombre)) {
                 $_SESSION['success'] = "Producto actualizado.";
             } else {
                 $_SESSION['error'] = "Error al actualizar el producto.";

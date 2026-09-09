@@ -84,9 +84,13 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <i class="fa-solid fa-users"></i>
             <span>Clientes</span>
         </a>
-        <a href="proveedores.php" class="sidebar-link d-flex align-items-center gap-3 text-decoration-none mb-1 <?= $currentPage == 'compras.php' || $currentPage == 'proveedores.php' ? 'active-link' : '' ?>">
+        <a href="compras.php" class="sidebar-link d-flex align-items-center gap-3 text-decoration-none mb-1 <?= $currentPage == 'compras.php' ? 'active-link' : '' ?>">
             <i class="fa-solid fa-cart-shopping"></i>
             <span>Compras</span>
+        </a>
+        <a href="proveedores.php" class="sidebar-link d-flex align-items-center gap-3 text-decoration-none mb-1 <?= $currentPage == 'proveedores.php' ? 'active-link' : '' ?>">
+            <i class="fa-solid fa-truck-moving"></i>
+            <span>Proveedores</span>
         </a>
         <a href="inventario.php" class="sidebar-link d-flex align-items-center gap-3 text-decoration-none mb-1 <?= $currentPage == 'inventario.php' || $currentPage == 'productos.php' ? 'active-link' : '' ?>">
             <i class="fa-solid fa-boxes-stacked"></i>
@@ -95,6 +99,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         <a href="categorias.php" class="sidebar-link d-flex align-items-center gap-3 text-decoration-none mb-1 <?= $currentPage == 'categorias.php' ? 'active-link' : '' ?>">
             <i class="fa-solid fa-layer-group"></i>
             <span>Categorías</span>
+        </a>
+        <a href="registrar_labor.php" class="sidebar-link d-flex align-items-center gap-3 text-decoration-none mb-1 <?= $currentPage == 'registrar_labor.php' ? 'active-link' : '' ?>">
+            <i class="fa-solid fa-tractor"></i>
+            <span>Labores</span>
         </a>
         <a href="agregar_producto.php" class="sidebar-link d-flex align-items-center gap-3 text-decoration-none mb-1 <?= $currentPage == 'agregar_producto.php' ? 'active-link' : '' ?>">
             <i class="fa-solid fa-plus-circle"></i>

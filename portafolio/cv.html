@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Hoja de Vida - Leonardo Gonzalez Perdomo</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2pdf -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e293b;
+            --text-main: #334155;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e2e8f0;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .controls {
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* CV Document Styles */
+        .cv-document {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-bottom: 50px;
+            display: flex;
+            box-sizing: border-box;
+        }
+
+        .sidebar {
+            width: 35%;
+            background-color: var(--secondary);
+            color: white;
+            padding: 40px 30px;
+        }
+
+        .main-content {
+            width: 65%;
+            padding: 40px;
+            background-color: white;
+        }
+
+        /* Sidebar Elements */
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.2);
+            margin: 0 auto 30px;
+            display: block;
+            object-fit: cover;
+        }
+
+        .sidebar h3 {
+            font-size: 1.2rem;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            color: #f1f5f9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contact-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 35px 0;
+        }
+
+        .contact-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            word-break: break-all;
+        }
+
+        .contact-list i {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-top: 2px;
+        }
+
+        .skills-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skills-list li {
+            margin-bottom: 12px;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skills-list i {
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+
+        /* Main Content Elements */
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .name {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin: 0 0 5px 0;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            margin: 0 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 10px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        .text {
+            line-height: 1.6;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Experience / Projects */
+        .item {
+            margin-bottom: 25px;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+        }
+
+        .item-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin: 0;
+        }
+
+        .item-subtitle {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--primary);
+            margin: 5px 0 10px 0;
+        }
+
+        .item-desc {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tags span {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <button class="btn" onclick="descargarPDF()"><i class="fa-solid fa-file-pdf"></i> Descargar PDF</button>
+        <button class="btn" style="background-color: #475569;" onclick="window.history.back()"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+    </div>
+
+    <!-- Contenedor que será exportado a PDF -->
+    <div class="cv-document" id="cv-content">
+        <!-- Barra lateral -->
+        <div class="sidebar">
+            <!-- NOTA: Usa la misma foto del portafolio, usando la ruta relativa -->
+            <img src="img/profile.png" alt="Leonardo Gonzalez" class="profile-img" onerror="this.src='https://via.placeholder.com/150/1e293b/ffffff?text=LG'">
+            
+            <h3>Contacto</h3>
+            <ul class="contact-list">
+                <li>
+                    <i class="fa-solid fa-phone"></i>
+                    <span>+57 322 267 3734</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>leonardogonzales542<br>@gmail.com</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Yaguará, Huila - Colombia</span>
+                </li>
+                <li>
+                    <i class="fa-brands fa-linkedin"></i>
+                    <span>in/leonardo-gonzalez-perdomo</span>
+                </li>
+                <li>
+                    <i class="fa-brands fa-github"></i>
+                    <span>leonardogonzales542-glitch/leo</span>
+                </li>
+            </ul>
+
+            <h3>Herramientas</h3>
+            <ul class="skills-list">
+                <li><i class="fa-solid fa-check"></i> React.js</li>
+                <li><i class="fa-solid fa-check"></i> JavaScript (ES6+)</li>
+                <li><i class="fa-solid fa-check"></i> HTML5 & CSS3</li>
+                <li><i class="fa-solid fa-check"></i> Tailwind CSS</li>
+                <li><i class="fa-solid fa-check"></i> PHP & MySQL</li>
+                <li><i class="fa-solid fa-check"></i> Git & GitHub</li>
+                <li><i class="fa-solid fa-check"></i> Figma</li>
+                <li><i class="fa-solid fa-check"></i> Postman & DevTools</li>
+            </ul>
+
+            <h3>Cualidades</h3>
+            <ul class="skills-list">
+                <li><i class="fa-solid fa-star"></i> Orientado a resultados</li>
+                <li><i class="fa-solid fa-star"></i> Creativo e Innovador</li>
+                <li><i class="fa-solid fa-star"></i> Trabajo en Equipo</li>
+                <li><i class="fa-solid fa-star"></i> Aprendizaje Autónomo</li>
+                <li><i class="fa-solid fa-star"></i> Atención al Detalle</li>
+            </ul>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="main-content">
+            <div class="header">
+                <h1 class="name">LEONARDO GONZALEZ</h1>
+                <h2 class="title">DESARROLLADOR DE SOFTWARE</h2>
+            </div>
+
+            <div class="section">
+                <h3 class="section-title"><i class="fa-solid fa-user"></i> Perfil Profesional</h3>
+                <p class="text">
+                    Desarrollador de software con formación técnica en Análisis y Desarrollo de Software. Cuento con experiencia construyendo interfaces web modernas, responsivas y eficientes utilizando React.js y Tailwind CSS, así como sistemas backend estructurados con PHP y MySQL.
+                    <br><br>
+                    Soy un profesional apasionado por crear experiencias de usuario intuitivas, escribir código limpio (Clean Code) y mantenerme en constante aprendizaje. Me destaco por mi compromiso, disciplina y gran capacidad para adaptarme a nuevas tecnologías y trabajar colaborativamente para entregar soluciones de alta calidad.
+                </p>
+            </div>
+
+            <div class="section">
+                <h3 class="section-title"><i class="fa-solid fa-briefcase"></i> Proyectos Destacados</h3>
+                
+                <div class="item">
+                    <div class="item-header">
+                        <h4 class="item-title">Contabilidad de Chucho</h4>
+                    </div>
+                    <h5 class="item-subtitle">Desarrollador Full Stack</h5>
+                    <p class="item-desc">
+                        Sistema integral de gestión contable y control de pagos. Permite llevar la administración financiera de forma estructurada, con reportes y gestión de usuarios.
+                    </p>
+                    <div class="tags">
+                        <span>PHP</span>
+                        <span>MySQL</span>
+                        <span>Arquitectura MVC</span>
+                        <span>HTML/CSS</span>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="item-header">
+                        <h4 class="item-title">AgriStock (Tienda Insumos)</h4>
+                    </div>
+                    <h5 class="item-subtitle">Desarrollador Full Stack</h5>
+                    <p class="item-desc">
+                        Plataforma de inventario, ventas y administración. Desarrollada con interfaces modernas y panel de control robusto, integrando validaciones de seguridad, roles de usuario, carrito de compras y registro de labores operativas.
+                    </p>
+                    <div class="tags">
+                        <span>PHP Nativo</span>
+                        <span>MySQLi</span>
+                        <span>Bootstrap 5</span>
+                        <span>SweetAlert2</span>
+                        <span>DataTables</span>
+                    </div>
+                </div>
+                
+                <div class="item">
+                    <div class="item-header">
+                        <h4 class="item-title">Portafolio Interactivo & Chatbot</h4>
+                    </div>
+                    <h5 class="item-subtitle">Desarrollador Frontend</h5>
+                    <p class="item-desc">
+                        Diseño y desarrollo de un portafolio web personal con estética moderna, animaciones y modo oscuro. Incluye la integración de un asistente virtual interactivo (chatbot) desarrollado con JavaScript para interactuar con los reclutadores.
+                    </p>
+                    <div class="tags">
+                        <span>JavaScript ES6+</span>
+                        <span>CSS3 Avanzado</span>
+                        <span>HTML5 Semántico</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 class="section-title"><i class="fa-solid fa-graduation-cap"></i> Formación Académica</h3>
+                
+                <div class="item">
+                    <h4 class="item-title">Análisis y Desarrollo de Software</h4>
+                    <h5 class="item-subtitle">Formación Técnica / Tecnológica</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function descargarPDF() {
+            const element = document.getElementById('cv-content');
+            
+            // Opciones para la librería html2pdf
+            const opt = {
+                margin:       0,
+                filename:     'Hoja_de_Vida_Leonardo_Gonzalez.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Generar y descargar el PDF
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+</html>

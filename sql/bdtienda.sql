@@ -36,6 +36,7 @@ CREATE TABLE `productos` (
   `codigo` varchar(50) UNIQUE NOT NULL,
   `nombre` varchar(150) NOT NULL,
   `id_categoria` int NOT NULL,
+  `id_proveedor` int,
   `descripcion` varchar(255),
   `unidad_medida` varchar(50),
   `precio_compra` decimal(12,2) NOT NULL,
@@ -203,3 +204,5 @@ ALTER TABLE `ingresos` ADD FOREIGN KEY (`id_venta`) REFERENCES `ventas` (`id_ven
 ALTER TABLE `egresos` ADD FOREIGN KEY (`id_entrada`) REFERENCES `entradas` (`id_entrada`);
 
 ALTER TABLE `bitacora_movimientos` ADD FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
+
+ALTER TABLE `productos` ADD FOREIGN KEY (`id_proveedor`) REFERENCES `proveedores` (`id_proveedor`);

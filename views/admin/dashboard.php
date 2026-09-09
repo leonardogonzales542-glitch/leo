@@ -228,6 +228,91 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
         </div>
     </div>
 
+    <!-- Nuevas Secciones -->
+    <div class="row g-4 mt-4">
+        <!-- Últimas Ventas -->
+        <div class="col-12 col-lg-8">
+            <div class="metric-card p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-bold text-body mb-0" style="font-size: 1.1rem;">Últimas Ventas</h5>
+                    <a href="ventas.php" class="btn btn-sm btn-outline-primary" style="border-radius: 8px;">Ver todas</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Factura</th>
+                                <th>Cliente</th>
+                                <th>Fecha</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Datos de ejemplo -->
+                            <tr>
+                                <td><span class="fw-medium">#FAC-001</span></td>
+                                <td>Juan Pérez</td>
+                                <td>Hoy, 10:30 AM</td>
+                                <td class="fw-semibold text-success">$150.00</td>
+                                <td><span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">Completada</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="fw-medium">#FAC-002</span></td>
+                                <td>María García</td>
+                                <td>Hoy, 09:15 AM</td>
+                                <td class="fw-semibold text-success">$85.50</td>
+                                <td><span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">Completada</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="fw-medium">#FAC-003</span></td>
+                                <td>Carlos López</td>
+                                <td>Ayer, 16:45 PM</td>
+                                <td class="fw-semibold text-success">$320.00</td>
+                                <td><span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25">Pendiente</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alertas de Inventario -->
+        <div class="col-12 col-lg-4">
+            <div class="metric-card p-4 h-100">
+                <h5 class="fw-bold text-body mb-4" style="font-size: 1.1rem;">Alertas Stock</h5>
+                <div class="list-group list-group-flush gap-2">
+                    <!-- Datos de ejemplo -->
+                    <div class="list-group-item px-3 py-3 border rounded-3 d-flex justify-content-between align-items-center" style="background-color: var(--bs-tertiary-bg);">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-danger bg-opacity-10 text-danger rounded p-2 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0 fw-semibold" style="font-size: 0.9rem;">Fertilizante NPK</h6>
+                                <small class="text-danger fw-medium">Quedan: 5 un.</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group-item px-3 py-3 border rounded-3 d-flex justify-content-between align-items-center" style="background-color: var(--bs-tertiary-bg);">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-warning bg-opacity-10 text-warning rounded p-2 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0 fw-semibold" style="font-size: 0.9rem;">Semillas de Maíz</h6>
+                                <small class="text-warning fw-medium">Quedan: 12 un.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 text-center">
+                    <a href="inventario.php" class="text-decoration-none text-primary fw-medium" style="font-size: 0.9rem;">Ir al inventario <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>

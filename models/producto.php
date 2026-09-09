@@ -7,9 +7,10 @@ class Producto {
     }
 
     public function getAll() {
-        $sql = "SELECT p.*, c.nombre as categoria_nombre 
+        $sql = "SELECT p.*, c.nombre as categoria_nombre, pr.razon_social as proveedor_nombre 
                 FROM productos p 
                 LEFT JOIN categorias c ON p.id_categoria = c.id_categoria 
+                LEFT JOIN proveedores pr ON p.id_proveedor = pr.id_proveedor
                 ORDER BY p.id_producto DESC";
         return $this->conn->query($sql);
     }
@@ -21,19 +22,19 @@ class Producto {
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public function create($codigo, $nombre, $id_categoria, $descripcion, $unidad_medida, $precio_compra, $precio_venta, $stock_actual, $stock_minimo, $imagen = 'default.png') {
-        $stmt = $this->conn->prepare("INSERT INTO productos (codigo, nombre, id_categoria, descripcion, unidad_medida, precio_compra, precio_venta, stock_actual, stock_minimo, estado, imagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?)");
-        $stmt->bind_param("ssissdddds", $codigo, $nombre, $id_categoria, $descripcion, $unidad_medida, $precio_compra, $precio_venta, $stock_actual, $stock_minimo, $imagen);
+    public function create($codigo, $nombre, $id_categoria, $id_proveedor, $descripcion, $unidad_medida, $precio_compra, $precio_venta, $stock_actual, $stock_minimo, $imagen = 'default.png') {
+        $stmt = $this->conn->prepare("INSERT INTO productos (codigo, nombre, id_categoria, id_proveedor, descripcion, unidad_medida, precio_compra, precio_venta, stock_actual, stock_minimo, estado, imagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?)");
+        $stmt->bind_param("ssiissdddds", $codigo, $nombre, $id_categoria, $id_proveedor, $descripcion, $unidad_medida, $precio_compra, $precio_venta, $stock_actual, $stock_minimo, $imagen);
         return $stmt->execute();
     }
 
-    public function update($id, $codigo, $nombre, $id_categoria, $descripcion, $unidad_medida, $precio_compra, $precio_venta, $stock_actual, $stock_minimo, $estado, $imagen = null) {
+    public function update($id, $codigo, $nombre, $id_categoria, $id_proveedor, $descripcion, $unidad_medida, $precio_compra, $precio_venta, $stock_actual, $stock_minimo, $estado, $imagen = null) {
         if ($imagen !== null) {
-            $stmt = $this->conn->prepare("UPDATE productos SET codigo = ?, nombre = ?, id_categoria = ?, descripcion = ?, unidad_medida = ?, precio_compra = ?, precio_venta = ?, stock_actual = ?, stock_minimo = ?, estado = ?, imagen = ? WHERE id_producto = ?");
-            $stmt->bind_param("ssissddddisi", $codigo, $nombre, $id_categoria, $descripcion, $unidad_medida, $precio_compra, $precio_venta, $stock_actual, $stock_minimo, $estado, $imagen, $id);
+            $stmt = $this->conn->prepare("UPDATE productos SET codigo = ?, nombre = ?, id_categoria = ?, id_proveedor = ?, descripcion = ?, unidad_medida = ?, precio_compra = ?, precio_venta = ?, stock_actual = ?, stock_minimo = ?, estado = ?, imagen = ? WHERE id_producto = ?");
+            $stmt->bind_param("ssiissddddisi", $codigo, $nombre, $id_categoria, $id_proveedor, $descripcion, $unidad_medida, $precio_compra, $precio_venta, $stock_actual, $stock_minimo, $estado, $imagen, $id);
         } else {
-            $stmt = $this->conn->prepare("UPDATE productos SET codigo = ?, nombre = ?, id_categoria = ?, descripcion = ?, unidad_medida = ?, precio_compra = ?, precio_venta = ?, stock_actual = ?, stock_minimo = ?, estado = ? WHERE id_producto = ?");
-            $stmt->bind_param("ssissddddii", $codigo, $nombre, $id_categoria, $descripcion, $unidad_medida, $precio_compra, $precio_venta, $stock_actual, $stock_minimo, $estado, $id);
+            $stmt = $this->conn->prepare("UPDATE productos SET codigo = ?, nombre = ?, id_categoria = ?, id_proveedor = ?, descripcion = ?, unidad_medida = ?, precio_compra = ?, precio_venta = ?, stock_actual = ?, stock_minimo = ?, estado = ? WHERE id_producto = ?");
+            $stmt->bind_param("ssiissddddii", $codigo, $nombre, $id_categoria, $id_proveedor, $descripcion, $unidad_medida, $precio_compra, $precio_venta, $stock_actual, $stock_minimo, $estado, $id);
         }
         return $stmt->execute();
     }
