@@ -129,6 +129,12 @@ $currentRoute = request()->route()->getName();
             <i class="fa-solid fa-gear"></i>
             <span>Configuración</span>
         </a>
+        
+        <div style="padding: 15px; margin-top: auto; font-size: 0.8rem; color: #6b7280; text-align: center; border-top: 1px solid #e5e7eb;">
+            <i class="fa-solid fa-location-dot mb-1"></i><br>
+            Calle 3 #7-22<br>
+            Yaguará, Colombia
+        </div>
     </nav>
 </aside>
 

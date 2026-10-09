@@ -16,21 +16,22 @@
 .ticket {
     width: 320px;
     background: #fff;
-    font-family: 'Consolas', 'Courier New', monospace;
-    font-size: 13px;
+    font-family: 'Arial', sans-serif;
+    font-size: 11px; /* Letra pequeña de ticket */
     color: #000;
     padding: 20px 15px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .ticket div, .ticket span, .ticket td, .ticket th {
-    font-family: 'Consolas', 'Courier New', monospace;
+    font-family: 'Arial', sans-serif;
     color: #000;
+    line-height: 1.2;
 }
 
 .ticket-title {
     text-align: center;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     margin-bottom: 5px;
 }
@@ -38,7 +39,7 @@
 .ticket-divider {
     border: none;
     border-top: 1px solid #000;
-    margin: 8px 0;
+    margin: 6px 0;
 }
 
 /* Flex rows */
@@ -60,22 +61,27 @@
 
 /* Items */
 .item-block {
-    margin-bottom: 10px;
-    line-height: 1.2;
+    margin-bottom: 8px;
+}
+
+.totals-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+    padding-right: 5px;
 }
 
 .totals-table {
-    width: 100%;
-    margin-top: 5px;
+    width: 65%;
 }
 .totals-table td {
-    padding: 2px 0;
+    padding: 1px 0;
 }
 .totals-table .val {
     text-align: right;
 }
 .total-final {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
 }
 
@@ -97,12 +103,12 @@
 
 .qr-container {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 20px;
 }
-.qr-container img {
-    width: 150px;
-    height: 150px;
+.qr-container #qrcode {
     margin-top: 5px;
+    display: flex;
+    justify-content: center;
 }
 
 /* ───── Print ───── */
@@ -152,7 +158,10 @@
 <div class="ticket-wrapper print-area">
     <div class="ticket">
 
-        <div class="ticket-title">FACTURA DE VENTA</div>
+        <div class="ticket-title">FACTURA B</div>
+        <div class="text-center" style="margin-bottom: 8px;">
+            Calle 3 #7-22<br>Yaguará, Colombia
+        </div>
         
         <div class="flex-row-between" style="margin-bottom: 5px;">
             <div>Fecha {{ date('d/m/y', strtotime($venta['fecha'])) }}</div>
@@ -164,7 +173,7 @@
 
         <hr class="ticket-divider">
 
-        <div style="line-height: 1.3;">
+        <div>
             <div>Cliente: {{ str_pad($venta['id_cliente'] ?? '0', 10, '0', STR_PAD_LEFT) }}</div>
             <div>Nombre: {{ $venta['cliente'] }}</div>
             @if(!empty($venta['numero_documento']))
@@ -182,7 +191,7 @@
                 <div>{{ number_format($item['cantidad'], 4, '.', '') }} x {{ number_format($item['precio_unitario'], 4, '.', ',') }}</div>
                 <div>ARTICULO: {{ str_pad($item['id_producto'], 8, '0', STR_PAD_LEFT) }}</div>
                 <div class="flex-row-between">
-                    <span style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $item['nombre'] }}</span>
+                    <span style="max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $item['nombre'] }}</span>
                     <span>{{ number_format($item['cantidad'] * $item['precio_unitario'], 2, '.', ',') }}</span>
                 </div>
             </div>
@@ -190,33 +199,37 @@
 
         <hr class="ticket-divider">
 
-        <table class="totals-table">
-            <tr>
-                <td>Subtotal:</td>
-                <td class="val">{{ number_format($venta['subtotal'], 2, '.', ',') }}</td>
-            </tr>
-            <tr>
-                <td>Descuentos:</td>
-                <td class="val">{{ $venta['descuento'] > 0 ? number_format($venta['descuento'], 2, '.', ',') : '' }}</td>
-            </tr>
-            <tr>
-                <td>Recargos:</td>
-                <td class="val"></td>
-            </tr>
-            <tr>
-                <td class="total-final">TOTAL:</td>
-                <td class="val total-final">{{ number_format($venta['total'], 2, '.', ',') }}</td>
-            </tr>
-        </table>
+        <div class="totals-wrapper">
+            <table class="totals-table">
+                <tr>
+                    <td>Subtotal:</td>
+                    <td class="val">{{ number_format($venta['subtotal'], 2, '.', ',') }}</td>
+                </tr>
+                <tr>
+                    <td>Descuentos:</td>
+                    <td class="val">{{ $venta['descuento'] > 0 ? number_format($venta['descuento'], 2, '.', ',') : '' }}</td>
+                </tr>
+                <tr>
+                    <td>Recargos:</td>
+                    <td class="val"></td>
+                </tr>
+                <tr>
+                    <td class="total-final">TOTAL:</td>
+                    <td class="val total-final">{{ number_format($venta['total'], 2, '.', ',') }}</td>
+                </tr>
+            </table>
+        </div>
 
         <hr class="ticket-divider">
 
         <table class="payment-table">
             <tr>
-                <th style="width: 70%;">Valor</th>
+                <th style="width: 20%;">Valor</th>
+                <th style="width: 50%;"></th>
                 <th class="text-right" style="width: 30%;">Monto</th>
             </tr>
             <tr>
+                <td>0</td>
                 <td>PESOS</td>
                 <td class="text-right">{{ number_format($venta['total'], 2, '.', ',') }}</td>
             </tr>
@@ -226,7 +239,7 @@
             <div>CAE: {{ rand(100000000, 999999999) }}{{ rand(10000, 99999) }}</div>
             <div>VTO CAE: {{ date('d/m/y', strtotime('+10 days', strtotime($venta['fecha']))) }}</div>
             
-            <div id="qrcode" style="display: flex; justify-content: center; margin-top: 8px;"></div>
+            <div id="qrcode"></div>
         </div>
 
     </div>
@@ -237,8 +250,8 @@
     document.addEventListener("DOMContentLoaded", function() {
         new QRCode(document.getElementById("qrcode"), {
             text: "Fac:{{ $venta['numero_factura'] }}|Total:{{ $venta['total'] }}",
-            width: 130,
-            height: 130,
+            width: 220, /* QR más grande según la imagen */
+            height: 220,
             colorDark : "#000000",
             colorLight : "#ffffff",
             correctLevel : QRCode.CorrectLevel.L

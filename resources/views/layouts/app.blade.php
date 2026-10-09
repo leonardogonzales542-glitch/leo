@@ -21,6 +21,10 @@
         @yield('content')
         
     </div>
+    {{-- WhatsApp Floating Button --}}
+    <a href="https://wa.me/573222673734?text=Hola%20quiero%20hacer%20una%20consulta" target="_blank" style="position: fixed; bottom: 95px; right: 20px; background-color: #25d366; color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 35px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); z-index: 9999; transition: transform 0.3s ease, background-color 0.3s ease; text-decoration: none;" onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='#1ebd57'" onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='#25d366'">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
 
     @include('layouts.chatbot')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
