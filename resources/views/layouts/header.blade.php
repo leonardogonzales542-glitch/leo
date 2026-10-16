@@ -1,14 +1,30 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+$isLoggedIn = false;
+$usuarioArray = [];
+
+if (function_exists('auth') && auth()->check()) {
+    $isLoggedIn = true;
+    $usuarioArray = auth()->user()->toArray();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    $_SESSION['usuario'] = $usuarioArray;
+} else {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (isset($_SESSION['usuario'])) {
+        $isLoggedIn = true;
+        $usuarioArray = $_SESSION['usuario'];
+    }
 }
 
-if (!isset($_SESSION['usuario'])) {
-    header('Location: ../../public/index.php');
+if (!$isLoggedIn) {
+    header('Location: /login');
     exit;
 }
 
-$usuario = $_SESSION['usuario'];
+$usuario = $usuarioArray;
 $titulo = $titulo ?? 'Dashboard';
 ?>
 <!DOCTYPE html>

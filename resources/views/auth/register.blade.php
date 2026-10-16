@@ -24,7 +24,7 @@ session_start();
     <div class="auth-card auth-card-register">
         <!-- Logo -->
         <div class="text-center mb-4">
-            <a class="text-success fw-bold text-decoration-none fs-2 d-inline-flex align-items-center mb-2" href="../../public/index.php">
+            <a class="text-success fw-bold text-decoration-none fs-2 d-inline-flex align-items-center mb-2" href="/">
                 <i class="bi bi-patch-check-fill text-success me-2"></i>AgriStock
             </a>
             <h4 class="fw-bold mb-1 text-white">Crear una Cuenta</h4>

@@ -114,7 +114,7 @@ class VentaController extends Controller
         DB::beginTransaction();
 
         try {
-            $numeroFactura = 'FAC-' . strtoupper(uniqid());
+            $numeroFactura = 'FAC-'.strtoupper(uniqid());
 
             $idVenta = DB::table('ventas')->insertGetId([
                 'id_cliente' => $validated['id_cliente'],
@@ -172,14 +172,15 @@ class VentaController extends Controller
 
             return response()->json([
                 'status' => 'error',
-                'message' => 'Error al guardar la venta: ' . $e->getMessage(),
+                'message' => 'Error al guardar la venta: '.$e->getMessage(),
             ], 500);
         }
     }
+
     public function factura(Request $request)
     {
         $id_venta = $request->query('id');
-        if (!$id_venta) {
+        if (! $id_venta) {
             return redirect()->route('ventas.index');
         }
 
@@ -190,7 +191,7 @@ class VentaController extends Controller
             ->select('ventas.*', 'clientes.nombre as cliente', 'clientes.numero_documento', 'clientes.direccion', 'clientes.telefono', 'usuarios.usuario as vendedor')
             ->first();
 
-        if (!$venta) {
+        if (! $venta) {
             abort(404, 'Venta no encontrada.');
         }
 
@@ -201,9 +202,9 @@ class VentaController extends Controller
             ->where('detalle_ventas.id_venta', $id_venta)
             ->select('detalle_ventas.*', 'productos.codigo', 'productos.nombre')
             ->get()
-            ->map(fn($item) => (array)$item)
+            ->map(fn ($item) => (array) $item)
             ->toArray();
-        
+
         $venta['detalles'] = $detalles;
 
         // Empresa config
@@ -212,9 +213,9 @@ class VentaController extends Controller
             'nit' => '900.123.456-7',
             'direccion' => 'Calle Principal #12-34, Ciudad',
             'telefono' => '300 123 4567',
-            'email' => 'contacto@agristock.com'
+            'email' => 'contacto@agristock.com',
         ];
-        
+
         $row_emp = DB::table('configuracion')->first();
         if ($row_emp) {
             $empresa['nombre'] = $row_emp->nombre_empresa ?: $empresa['nombre'];
@@ -224,8 +225,50 @@ class VentaController extends Controller
             $empresa['email'] = $row_emp->email ?: $empresa['email'];
         }
 
-        $titulo = 'Factura ' . $venta['numero_factura'];
+        $titulo = 'Factura '.$venta['numero_factura'];
 
         return view('admin.factura', compact('venta', 'empresa', 'titulo'));
+    }
+
+    /**
+     * Anular una venta y devolver stock al inventario.
+     */
+    public function destroy(int $id): RedirectResponse
+    {
+        $venta = DB::table('ventas')->where('id_venta', $id)->first();
+
+        if (! $venta) {
+            return redirect()->route('ventas.index')->with('error', 'Venta no encontrada.');
+        }
+
+        if ($venta->estado === 'CANCELADA') {
+            return redirect()->route('ventas.index')->with('error', 'La venta ya estaba anulada.');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            // Devolver stock de cada detalle
+            $detalles = DB::table('detalle_ventas')->where('id_venta', $id)->get();
+
+            foreach ($detalles as $detalle) {
+                DB::table('productos')
+                    ->where('id_producto', $detalle->id_producto)
+                    ->increment('stock_actual', $detalle->cantidad);
+            }
+
+            // Marcar venta como cancelada
+            DB::table('ventas')
+                ->where('id_venta', $id)
+                ->update(['estado' => 'CANCELADA']);
+
+            DB::commit();
+
+            return redirect()->route('ventas.index')->with('success', 'Venta anulada correctamente. El stock fue restaurado.');
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return redirect()->route('ventas.index')->with('error', 'Error al anular la venta: '.$e->getMessage());
+        }
     }
 }

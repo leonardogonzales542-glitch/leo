@@ -9,7 +9,13 @@ class EgresoController extends Controller
 {
     public function index()
     {
-        return view('admin.registrar_labor'); // Will be renamed later or just keep using this view for now
+        $egresos = DB::table('egresos')
+            ->orderByDesc('fecha')
+            ->get();
+
+        $totalGastos = $egresos->sum('monto');
+
+        return view('admin.egresos', compact('egresos', 'totalGastos'));
     }
 
     public function create()

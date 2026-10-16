@@ -1,14 +1,6 @@
-<?php
-session_start();
-if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['id_rol'] != 1) {
-    exit;
-}
-require_once __DIR__ . '/../../config/database.php';
-
-$titulo = 'Nuevo Pedido';
-require_once __DIR__ . '/../layouts/header.php';
-require_once __DIR__ . '/../layouts/sidebaradmin.php';
-?>
+@extends('layouts.app')
+@section('title', 'Nuevo Pedido')
+@section('content')
 
 <div class="d-flex flex-column gap-4" style="max-width: 1400px; margin: 0 auto; width: 100%;">
     
@@ -18,7 +10,7 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
             <span class="text-muted small">Creación de pedidos de Purina</span>
         </div>
         <div>
-            <a href="pedidos.php" class="btn btn-outline-secondary rounded-3 shadow-sm px-4 fw-medium">
+            <a href="{{ route('pedidos.index') }}" class="btn btn-outline-secondary rounded-3 shadow-sm px-4 fw-medium">
                 <i class="fa-solid fa-arrow-left me-2"></i>Volver a Pedidos
             </a>
         </div>
@@ -154,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
             resProductos.style.display = 'none';
             return;
         }
-        fetch(`../../controllers/PedidoController.php?action=search_product&q=${encodeURIComponent(q)}`)
+        fetch(`{{ route('ventas.search.productos') }}?q=${encodeURIComponent(q)}`)
             .then(res => res.json())
             .then(data => {
                 resProductos.innerHTML = '';
@@ -287,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function() {
             resClientes.style.display = 'none';
             return;
         }
-        fetch(`../../controllers/PedidoController.php?action=search_client&q=${encodeURIComponent(q)}`)
+        fetch(`{{ route('ventas.search.clientes') }}?q=${encodeURIComponent(q)}`)
             .then(res => res.json())
             .then(data => {
                 resClientes.innerHTML = '';
@@ -356,9 +348,12 @@ document.addEventListener('DOMContentLoaded', function() {
         this.disabled = true;
         this.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Generando...';
 
-        fetch('../../controllers/PedidoController.php', {
+        fetch('{{ route('pedidos.store') }}', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
             body: JSON.stringify({...data, action: 'save_pedido'})
         })
         .then(res => res.json())
@@ -373,7 +368,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     cancelButtonText: 'Nuevo Pedido'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = 'pedidos.php';
+                        window.location.href = '{{ route('pedidos.index') }}';
                     } else {
                         window.location.reload();
                     }
@@ -393,5 +388,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 </script>
-
-<?php require_once __DIR__ . '/../layouts/footer.php'; ?>
+@endsection

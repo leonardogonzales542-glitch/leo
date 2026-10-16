@@ -149,6 +149,9 @@
         <a href="{{ route('ventas.index') }}" class="btn btn-outline-secondary rounded-3 px-4 fw-medium">
             <i class="fa-solid fa-arrow-left me-2"></i>Volver
         </a>
+        <button id="downloadPdfBtn" class="btn btn-danger rounded-3 shadow-sm px-4 fw-medium">
+            <i class="fa-solid fa-file-pdf me-2"></i>PDF
+        </button>
         <button onclick="window.print()" class="btn btn-primary rounded-3 shadow-sm px-4 fw-medium">
             <i class="fa-solid fa-print me-2"></i>Imprimir
         </button>
@@ -160,7 +163,7 @@
 
         <div class="ticket-title">FACTURA B</div>
         <div class="text-center" style="margin-bottom: 8px;">
-            Calle 3 #7-22<br>Yaguará, Colombia
+            Calle 3 # 7 22<br>Yaguará, Colombia
         </div>
         
         <div class="flex-row-between" style="margin-bottom: 5px;">
@@ -246,6 +249,8 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         new QRCode(document.getElementById("qrcode"), {
@@ -255,6 +260,28 @@
             colorDark : "#000000",
             colorLight : "#ffffff",
             correctLevel : QRCode.CorrectLevel.L
+        });
+
+        // Configuración para descargar PDF
+        document.getElementById('downloadPdfBtn').addEventListener('click', function () {
+            const btn = this;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i>Generando...';
+            btn.disabled = true;
+
+            const element = document.querySelector('.ticket');
+            
+            const opt = {
+                margin:       3,
+                filename:     'Factura_{{ $venta["numero_factura"] }}.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: [80, 250], orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(element).save().then(function() {
+                btn.innerHTML = '<i class="fa-solid fa-file-pdf me-2"></i>PDF';
+                btn.disabled = false;
+            });
         });
     });
 </script>

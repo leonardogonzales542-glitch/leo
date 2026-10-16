@@ -42,6 +42,7 @@
                             <th>Nº Documento</th>
                             <th>Total</th>
                             <th>Usuario</th>
+                            <th class="text-end">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,10 +56,15 @@
                                 <td>{{ $compra->numero_documento ?? '-' }}</td>
                                 <td class="fw-bold text-dark">${{ number_format($compra->total, 2) }}</td>
                                 <td class="small text-muted">{{ $compra->usuario->usuario ?? 'Admin' }}</td>
+                                <td class="text-end">
+                                    <a href="{{ route('compras.show', $compra->id_entrada) }}" class="btn btn-sm btn-outline-primary rounded-3 shadow-sm" title="Ver Recibo">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                    </a>
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center text-muted py-4">No hay compras registradas.</td>
+                                <td colspan="7" class="text-center text-muted py-4">No hay compras registradas.</td>
                             </tr>
                         @endforelse
                     </tbody>

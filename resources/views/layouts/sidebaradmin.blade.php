@@ -14,7 +14,7 @@ switch ($id_rol) {
         break;
 }
 $nombreCompleto = $user->usuario ?? 'Usuario';
-$currentRoute = request()->route()->getName();
+$currentRoute = request()->route()?->getName() ?? '';
 @endphp
 
 <style>
@@ -54,12 +54,65 @@ $currentRoute = request()->route()->getName();
     color: #f97316;
     letter-spacing: 0.5px;
 }
+
+/* Responsive Sidebar Behavior */
+.sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(3px);
+    z-index: 1055;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+.sidebar-backdrop.show {
+    display: block;
+    opacity: 1;
+}
+@media (min-width: 992px) {
+    .admin-sidebar {
+        width: 250px;
+        min-width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+    .sidebar-backdrop {
+        display: none !important;
+    }
+}
+@media (max-width: 991.98px) {
+    .admin-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 280px;
+        max-width: 85vw;
+        height: 100vh;
+        z-index: 1060;
+        background-color: var(--bs-body-bg) !important;
+        box-shadow: 0 0 35px rgba(0, 0, 0, 0.4);
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .admin-sidebar.show-sidebar {
+        transform: translateX(0);
+    }
+}
 </style>
 
-<aside class="flex-shrink-0 bg-body-tertiary border-end d-flex flex-column position-sticky top-0 vh-100" style="width: 250px; min-width: 250px;">
+<aside id="adminSidebar" class="admin-sidebar flex-shrink-0 bg-body-tertiary border-end d-flex flex-column">
     <!-- Brand Logo Section -->
-    <div class="d-flex flex-column align-items-center justify-content-center bg-white" style="padding: 20px 0; margin-bottom: 20px;">
-        <img src="{{ asset('img/logo.png') }}" alt="AgriStock Logo" style="max-width: 150px; height: auto;">
+    <div class="d-flex align-items-center justify-content-between bg-white px-3 py-3 border-bottom" style="margin-bottom: 10px;">
+        <img src="{{ asset('img/logo.png') }}" alt="AgriStock Logo" style="max-height: 42px; width: auto;">
+        <button id="closeSidebarBtn" class="btn btn-sm btn-light border-0 d-lg-none" type="button" aria-label="Cerrar menú">
+            <i class="fa-solid fa-xmark fs-5 text-muted"></i>
+        </button>
     </div>
 
     <!-- Navigation Menu -->
@@ -132,15 +185,22 @@ $currentRoute = request()->route()->getName();
         
         <div style="padding: 15px; margin-top: auto; font-size: 0.8rem; color: #6b7280; text-align: center; border-top: 1px solid #e5e7eb;">
             <i class="fa-solid fa-location-dot mb-1"></i><br>
-            Calle 3 #7-22<br>
+            Calle 3 # 7 22<br>
             Yaguará, Colombia
         </div>
     </nav>
 </aside>
 
+<!-- Backdrop para cerrar sidebar en móvil -->
+<div id="sidebarBackdrop" class="sidebar-backdrop"></div>
+
 <main class="flex-grow-1 d-flex flex-column min-vh-100 bg-body" style="min-width: 0;">
     <!-- Top Header -->
-    <header class="d-flex align-items-center justify-content-end px-4 py-3 bg-body-tertiary border-bottom position-sticky top-0" style="z-index: 1020;">
+    <header class="d-flex align-items-center justify-content-between px-4 py-3 bg-body-tertiary border-bottom position-sticky top-0" style="z-index: 1020;">
+        <!-- Botón hamburguesa — solo visible en móvil -->
+        <button id="openSidebarBtn" class="btn btn-sm btn-light border d-lg-none" type="button" aria-label="Abrir menú">
+            <i class="fa-solid fa-bars fs-5 text-secondary"></i>
+        </button>
         <div class="d-flex align-items-center gap-4">
             <!-- Color Home Toggle -->
             <div id="colorHomeToggle" class="d-flex align-items-center gap-2 border rounded-pill px-3 py-1 bg-light text-muted" style="cursor: pointer; transition: all 0.3s;">
@@ -228,3 +288,35 @@ $currentRoute = request()->route()->getName();
 
     <!-- Content Area Wrapper -->
     <div class="p-4 p-lg-5 flex-grow-1">
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var sidebar    = document.getElementById('adminSidebar');
+    var backdrop   = document.getElementById('sidebarBackdrop');
+    var openBtn    = document.getElementById('openSidebarBtn');
+    var closeBtn   = document.getElementById('closeSidebarBtn');
+
+    function openSidebar() {
+        sidebar.classList.add('show-sidebar');
+        backdrop.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+        sidebar.classList.remove('show-sidebar');
+        backdrop.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    if (openBtn) { openBtn.addEventListener('click', openSidebar); }
+    if (closeBtn) { closeBtn.addEventListener('click', closeSidebar); }
+    if (backdrop) { backdrop.addEventListener('click', closeSidebar); }
+
+    // Cerrar al navegar a un enlace en móvil
+    sidebar.querySelectorAll('a.sidebar-link').forEach(function (link) {
+        link.addEventListener('click', function () {
+            if (window.innerWidth < 992) { closeSidebar(); }
+        });
+    });
+});
+</script>

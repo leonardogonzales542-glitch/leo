@@ -277,6 +277,30 @@
         </div>
     </div>
 
+    <!-- Mapa de Ubicación en el Dashboard -->
+    <div class="row g-4 mt-1">
+        <div class="col-12">
+            <div class="metric-card p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold text-body mb-0" style="font-size: 1.1rem;">
+                        <i class="fa-solid fa-map-location-dot text-primary me-2"></i> Nuestra Ubicación Física
+                    </h5>
+                </div>
+                <div style="border-radius: 12px; overflow: hidden; border: 1px solid var(--bs-border-color-translucent);">
+                    <iframe 
+                        src="https://www.google.com/maps?q=Calle+3+%23+7+22,+Yaguara,+Colombia&output=embed" 
+                        width="100%" 
+                        height="400" 
+                        style="border:0; display: block;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 @endsection

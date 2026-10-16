@@ -55,8 +55,8 @@
                             elseif ($p->stock_actual <= $p->stock_minimo) $stockStatusClass = 'warning';
                         ?>
                         <tr class="border-bottom">
-                            <td class="px-4 py-3 fw-bold text-dark" style="font-size: 0.85rem;">{{ $p->codigo }}</td>
-                            <td class="px-4 py-3 fw-semibold text-dark text-truncate" style="max-width: 200px;">
+                            <td class="px-4 py-3 fw-bold text-dark" style="font-size: 0.85rem; white-space: nowrap;">{{ $p->codigo }}</td>
+                            <td class="px-4 py-3 fw-semibold text-dark" style="min-width: 180px;">
                                 <div class="d-flex align-items-center gap-3">
                                     @if (!empty($p->imagen) && $p->imagen != 'default.png')
                                         <img src="{{ asset('img/productos/' . $p->imagen) }}" alt="Img" width="40" height="40" class="rounded-3 object-fit-cover shadow-sm border flex-shrink-0">
@@ -65,7 +65,7 @@
                                             <i class="fa-solid fa-image text-muted opacity-50"></i>
                                         </div>
                                     @endif
-                                    {{ $p->nombre }}
+                                    <span>{{ $p->nombre }}</span>
                                 </div>
                             </td>
                             <td class="px-4 py-3 text-muted small">

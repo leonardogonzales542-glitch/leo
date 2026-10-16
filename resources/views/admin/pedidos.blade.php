@@ -10,7 +10,7 @@
             <span class="text-muted small">Panel principal e historial de pedidos</span>
         </div>
         <div>
-            <a href="nuevo_pedido.php" class="btn btn-primary rounded-3 shadow-sm px-4 fw-medium" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%); border: none;">
+            <a href="{{ route('pedidos.create') }}" class="btn btn-primary rounded-3 shadow-sm px-4 fw-medium" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%); border: none;">
                 <i class="fa-solid fa-plus me-2"></i>Nuevo Pedido
             </a>
         </div>
@@ -58,6 +58,9 @@
                                         <span class="badge {{ $badgeClass }} rounded-pill px-3 py-2 fw-medium">{{ $p->estado }}</span>
                                     </td>
                                     <td class="text-end">
+                                        <a href="{{ route('pedidos.show', $p->id_pedido) }}" class="btn btn-sm btn-outline-primary rounded-circle shadow-sm me-1" title="Ver Recibo">
+                                            <i class="fa-solid fa-file-invoice"></i>
+                                        </a>
                                         <button onclick="cambiarEstado({{ $p->id_pedido }}, '{{ $p->estado }}')" class="btn btn-sm btn-light text-primary shadow-sm rounded-circle me-1" title="Cambiar Estado">
                                             <i class="fa-solid fa-edit"></i>
                                         </button>

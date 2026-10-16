@@ -29,6 +29,7 @@
                             <th>Motivo</th>
                             <th>Items Devueltos</th>
                             <th>Estado</th>
+                            <th class="text-end rounded-end">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,10 +75,9 @@
                 <h5 class="modal-title fw-bold">Registrar Nueva Devolución</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="../../controllers/DevolucionController.php" method="POST" id="formDevolucion">
+            <form action="{{ route('devoluciones.store') }}" method="POST" id="formDevolucion">
+                @csrf
                 <div class="modal-body">
-                    <input type="hidden" name="action" value="create">
-                    
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label text-muted small fw-bold">Origen de la Devolución</label>
@@ -95,7 +95,7 @@
                     
                     <div class="mb-3">
                         <label class="form-label text-muted small fw-bold">Motivo de la Devolución</label>
-                        <textarea name="motivo" class="form-control rounded-3 bg-light border-0" rows="3" required placeholder="Escriba el motivo detallado de la devoluciÃƒÂ³n..."></textarea>
+                        <textarea name="motivo" class="form-control rounded-3 bg-light border-0" rows="3" required placeholder="Escriba el motivo detallado de la devolución..."></textarea>
                     </div>
                     
                     <hr class="text-muted opacity-25">
@@ -150,18 +150,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    <?php if(isset($_SESSION['alert'])): ?>
-        Swal.fire({
-            icon: '<?= $_SESSION['alert']['type'] ?>',
-            title: '<?= addslashes($_SESSION['alert']['title']) ?>',
-            text: '<?= addslashes($_SESSION['alert']['message']) ?>',
-            timer: <?= $_SESSION['alert']['type'] == 'success' ? '3000' : 'null' ?>,
-            showConfirmButton: <?= $_SESSION['alert']['type'] == 'success' ? 'false' : 'true' ?>
-        });
-        <?php unset($_SESSION['alert']); ?>
+    @if(session('success'))
+        Swal.fire({ icon: 'success', title: '¡Éxito!', text: '{{ session('success') }}', timer: 3000, showConfirmButton: false });
     @endif
-    
-    // Lógica dinámica para agregar productos a la devoluciÃƒÂ³n
+    @if(session('error'))
+        Swal.fire({ icon: 'error', title: 'Error', text: '{{ session('error') }}' });
+    @endif
+
+    // Lógica dinámica para agregar productos a la devolución
     const btnAddProducto = document.getElementById('btn_add_producto');
     const productosContainer = document.getElementById('productos_container');
     

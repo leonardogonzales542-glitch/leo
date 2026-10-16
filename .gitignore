@@ -25,3 +25,7 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/flutter/
+android-studio*
+cloudflared.exe
+/app_prueba/

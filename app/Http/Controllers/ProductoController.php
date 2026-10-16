@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Producto;
 use App\Models\Categoria;
+use App\Models\Producto;
 use App\Models\Proveedor;
 use Illuminate\Http\Request;
 
@@ -12,19 +12,19 @@ class ProductoController extends Controller
     public function index(Request $request)
     {
         $filtro = $request->query('filtro', '');
-        
+
         if ($filtro == 'stock_bajo') {
             // Approximation for now
             $productos = Producto::with(['categoria', 'proveedor'])->whereColumn('stock_actual', '<=', 'stock_minimo')->orderBy('id_producto', 'desc')->get();
-            $tituloPagina = "Stock Bajo";
+            $tituloPagina = 'Stock Bajo';
         } else {
             $productos = Producto::with(['categoria', 'proveedor'])->orderBy('id_producto', 'desc')->get();
-            $tituloPagina = "Inventario Completo";
+            $tituloPagina = 'Inventario Completo';
         }
-        
+
         $categorias = Categoria::all();
         $proveedores = Proveedor::all();
-        
+
         return view('admin.inventario', compact('productos', 'categorias', 'proveedores', 'tituloPagina', 'filtro'));
     }
 
@@ -32,6 +32,7 @@ class ProductoController extends Controller
     {
         $categorias = Categoria::all();
         $proveedores = Proveedor::all();
+
         return view('admin.agregar_producto', compact('categorias', 'proveedores'));
     }
 
@@ -48,11 +49,11 @@ class ProductoController extends Controller
             'precio_venta' => 'required|numeric|min:0',
             'stock_actual' => 'required|numeric|min:0',
             'stock_minimo' => 'required|numeric|min:0',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($request->hasFile('imagen')) {
-            $imagen_nombre = time() . '_' . $request->file('imagen')->getClientOriginalName();
+            $imagen_nombre = time().'_'.$request->file('imagen')->getClientOriginalName();
             $request->file('imagen')->move(public_path('img/productos'), $imagen_nombre);
             $data['imagen'] = $imagen_nombre;
         } else {
@@ -71,7 +72,7 @@ class ProductoController extends Controller
         $producto = Producto::findOrFail($id);
 
         $data = $request->validate([
-            'codigo' => 'required|string|max:50|unique:productos,codigo,' . $id . ',id_producto',
+            'codigo' => 'required|string|max:50|unique:productos,codigo,'.$id.',id_producto',
             'nombre' => 'required|string|max:100',
             'id_categoria' => 'required|integer|exists:categorias,id_categoria',
             'id_proveedor' => 'nullable|integer|exists:proveedores,id_proveedor',
@@ -82,18 +83,18 @@ class ProductoController extends Controller
             'stock_actual' => 'required|numeric|min:0',
             'stock_minimo' => 'required|numeric|min:0',
             'estado' => 'boolean',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($request->hasFile('imagen')) {
-            $imagen_nombre = time() . '_' . $request->file('imagen')->getClientOriginalName();
+            $imagen_nombre = time().'_'.$request->file('imagen')->getClientOriginalName();
             $request->file('imagen')->move(public_path('img/productos'), $imagen_nombre);
             $data['imagen'] = $imagen_nombre;
         }
 
         $producto->update($data);
 
-        return redirect()->back()->with('success', "Producto actualizado correctamente.");
+        return redirect()->back()->with('success', 'Producto actualizado correctamente.');
     }
 
     public function destroy($id)
@@ -101,9 +102,10 @@ class ProductoController extends Controller
         try {
             $producto = Producto::findOrFail($id);
             $producto->delete();
-            return redirect()->back()->with('success', "Producto eliminado exitosamente.");
+
+            return redirect()->back()->with('success', 'Producto eliminado exitosamente.');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', "No se puede eliminar el producto porque tiene movimientos (ventas, entradas, etc).");
+            return redirect()->back()->with('error', 'No se puede eliminar el producto porque tiene movimientos (ventas, entradas, etc).');
         }
     }
 }

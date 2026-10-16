@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Models\Cliente;
 use App\Models\Producto;
 use App\Models\Venta;
-use App\Models\Pedido;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -19,9 +16,9 @@ class DashboardController extends Controller
             ->selectRaw('COUNT(*) as cantidad, SUM(total) as monto')
             ->where('estado', '!=', 'CANCELADA')
             ->first();
-            
-        $montoVentas = (float)($ventasData->monto ?? 0);
-        $cantidadVentas = (int)($ventasData->cantidad ?? 0);
+
+        $montoVentas = (float) ($ventasData->monto ?? 0);
+        $cantidadVentas = (int) ($ventasData->cantidad ?? 0);
 
         // 2. Total de Pedidos
         $totalPedidos = DB::table('pedidos')->count();
@@ -52,6 +49,24 @@ class DashboardController extends Controller
 
     public function cliente()
     {
-        return view('cliente.dashboard');
+        $productos = DB::table('productos')
+            ->leftJoin('categorias', 'productos.id_categoria', '=', 'categorias.id_categoria')
+            ->where('productos.estado', 1)
+            ->select(
+                'productos.id_producto',
+                'productos.codigo',
+                'productos.nombre',
+                'productos.descripcion',
+                'productos.precio_venta',
+                'productos.imagen',
+                'productos.stock_actual',
+                'categorias.nombre as categoria_nombre'
+            )
+            ->orderBy('productos.nombre')
+            ->get();
+
+        $nombreUsuario = auth()->user()->usuario ?? 'Cliente';
+
+        return view('cliente.dashboard', compact('productos', 'nombreUsuario'));
     }
 }

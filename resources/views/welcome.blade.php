@@ -56,7 +56,7 @@
         </div>
         
         <div style="margin-top: 30px; font-size: 0.95rem; color: #64748b; display: flex; align-items: center; gap: 8px;">
-            <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+            <svg width="18" height="18" fill="var(--primary)" viewBox="0 0 16 16">
                 <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
             </svg>
             <strong>Ubicación:</strong> Calle 3 #7-22, Yaguará, Colombia
@@ -64,7 +64,7 @@
       </div>
 
       <div class="hero-right">
-        <!-- Imagen de fondo decorativa para el panel (reemplazada con nuestra IA) -->
+        <!-- Imagen de fondo decorativa para el panel -->
         <img src="{{ asset('img/hero-dog.jpg') }}" alt="Fondo" class="bg-image">
         
         <div class="glass-panel">
@@ -101,6 +101,5 @@
         </div>
       </div>
     </div>
-
 </body>
 </html>
