@@ -44,7 +44,7 @@
                         <th class="px-4 py-3 text-muted" style="font-weight: 600; font-size: 0.8rem;">PRECIO V.</th>
                         <th class="px-4 py-3 text-muted" style="font-weight: 600; font-size: 0.8rem;">STOCK</th>
                         <th class="px-4 py-3 text-muted" style="font-weight: 600; font-size: 0.8rem;">ESTADO</th>
-                        <th class="px-4 py-3 text-muted text-end" style="font-weight: 600; font-size: 0.8rem;">ACCIONES</th>
+                        <th class="px-4 py-3 text-muted text-end table-actions-cell" style="font-weight: 600; font-size: 0.8rem;">ACCIONES</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,13 +85,22 @@
                                     <i class="fa-solid fa-circle-xmark text-danger"></i>
                                 @endif
                             </td>
-                            <td class="px-4 py-3 text-end">
-                                <button type="button" class="btn btn-sm btn-light border text-primary me-2 shadow-sm rounded-3" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $p->id_producto }}">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-light border text-danger shadow-sm rounded-3" onclick="if(confirm('¿Eliminar producto {{ $p->nombre }}?')) { document.getElementById('delete-form-{{ $p->id_producto }}').submit(); }">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
+                            <td class="px-4 py-3 text-center" style="width: 110px;">
+                                <div class="d-flex align-items-center justify-content-center gap-3">
+                                    <button type="button" 
+                                        class="btn-action-clean text-primary" 
+                                        title="Editar" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#modalEdit{{ $p->id_producto }}">
+                                        <i class="fa-solid fa-pen" style="color: #3b82f6; font-size: 1.05rem;"></i>
+                                    </button>
+                                    <button type="button" 
+                                        class="btn-action-clean text-danger" 
+                                        title="Eliminar" 
+                                        onclick="confirmarEliminacion('delete-form-{{ $p->id_producto }}', '¿Eliminar producto?', '¿Deseas eliminar permanentemente <b>{{ addslashes($p->nombre) }}</b>?')">
+                                        <i class="fa-regular fa-trash-can" style="color: #ef4444; font-size: 1.05rem;"></i>
+                                    </button>
+                                </div>
                                 <form id="delete-form-{{ $p->id_producto }}" action="{{ route('productos.destroy', $p->id_producto) }}" method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')

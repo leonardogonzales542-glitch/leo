@@ -10,8 +10,8 @@
             <span class="text-muted small">Panel principal e historial de compras (Entradas)</span>
         </div>
         <div>
-            <a href="{{ route('compras.create') }}" class="btn btn-primary rounded-3 shadow-sm px-4 fw-medium" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%); border: none;">
-                <i class="fa-solid fa-plus me-2"></i>Nueva Compra
+            <a href="{{ route('compras.create') }}" class="btn btn-primary rounded-3 shadow-sm px-3 py-2 fw-semibold" style="background-color: #2563eb; border-color: #2563eb; font-size: 0.9rem;">
+                <i class="fa-solid fa-plus me-1"></i> Nueva compra
             </a>
         </div>
     </div>
@@ -42,7 +42,7 @@
                             <th>Nº Documento</th>
                             <th>Total</th>
                             <th>Usuario</th>
-                            <th class="text-end">Acciones</th>
+                            <th class="text-center" style="width: 100px;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,10 +56,14 @@
                                 <td>{{ $compra->numero_documento ?? '-' }}</td>
                                 <td class="fw-bold text-dark">${{ number_format($compra->total, 2) }}</td>
                                 <td class="small text-muted">{{ $compra->usuario->usuario ?? 'Admin' }}</td>
-                                <td class="text-end">
-                                    <a href="{{ route('compras.show', $compra->id_entrada) }}" class="btn btn-sm btn-outline-primary rounded-3 shadow-sm" title="Ver Recibo">
-                                        <i class="fa-solid fa-file-invoice"></i>
-                                    </a>
+                                <td class="text-center" style="width: 100px;">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <a href="{{ route('compras.show', $compra->id_entrada) }}" 
+                                           class="btn-action-clean text-primary" 
+                                           title="Ver Recibo">
+                                            <i class="fa-solid fa-file-invoice" style="color: #3b82f6; font-size: 1.05rem;"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         @empty

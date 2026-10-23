@@ -34,7 +34,7 @@
                         <th class="px-4 py-3 text-muted" style="font-weight: 600; font-size: 0.85rem;">NOMBRE</th>
                         <th class="px-4 py-3 text-muted" style="font-weight: 600; font-size: 0.85rem;">DESCRIPCIÓN</th>
                         <th class="px-4 py-3 text-muted" style="font-weight: 600; font-size: 0.85rem;">ESTADO</th>
-                        <th class="px-4 py-3 text-muted text-end" style="font-weight: 600; font-size: 0.85rem;">ACCIONES</th>
+                        <th class="px-4 py-3 text-muted text-end table-actions-cell" style="font-weight: 600; font-size: 0.85rem;">ACCIONES</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,21 +46,30 @@
                                 <td class="px-4 py-3 text-muted text-truncate" style="max-width: 250px;">{{ $cat->descripcion }}</td>
                                 <td class="px-4 py-3">
                                     @if ($cat->estado)
-                                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3 py-2">Activo</span>
+                                        <span class="badge-estado-activo">Activo</span>
                                     @else
-                                        <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-3 py-2">Inactivo</span>
+                                        <span class="badge-estado-inactivo">Inactivo</span>
                                     @endif
                                 </td>
-                                <td class="px-4 py-3 text-end">
-                                    <button type="button" class="btn btn-sm btn-light border text-primary me-2 shadow-sm rounded-3" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $cat->id_categoria ?? $cat->id }}">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </button>
-                                    <form action="{{ route('categorias.destroy', $cat->id_categoria ?? $cat->id) }}" method="POST" class="d-inline">
+                                <td class="px-4 py-3 text-center" style="width: 110px;">
+                                    <div class="d-flex align-items-center justify-content-center gap-3">
+                                        <button type="button" 
+                                            class="btn-action-clean text-primary" 
+                                            title="Editar" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#modalEdit{{ $cat->id_categoria ?? $cat->id }}">
+                                            <i class="fa-solid fa-pen" style="color: #3b82f6; font-size: 1.05rem;"></i>
+                                        </button>
+                                        <button type="button" 
+                                            class="btn-action-clean text-danger" 
+                                            title="Eliminar" 
+                                            onclick="confirmarEliminacion('delete-cat-{{ $cat->id_categoria ?? $cat->id }}', '¿Eliminar categoría?', '¿Deseas eliminar la categoría <b>{{ addslashes($cat->nombre) }}</b>?')">
+                                            <i class="fa-regular fa-trash-can" style="color: #ef4444; font-size: 1.05rem;"></i>
+                                        </button>
+                                    </div>
+                                    <form id="delete-cat-{{ $cat->id_categoria ?? $cat->id }}" action="{{ route('categorias.destroy', $cat->id_categoria ?? $cat->id) }}" method="POST" style="display: none;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-light border text-danger shadow-sm rounded-3" onclick="return confirm('¿Estás seguro de eliminar esta categoría?')">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
                                     </form>
                                 </td>
                             </tr>

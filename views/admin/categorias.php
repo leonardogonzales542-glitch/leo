@@ -1,18 +1,18 @@
 <?php
 session_start();
-if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['id_rol'] != 1) {
+if (! isset($_SESSION['usuario']) || $_SESSION['usuario']['id_rol'] != 1) {
     header('Location: ../../public/index.php');
     exit;
 }
-require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/../../models/categoria.php';
+require_once __DIR__.'/../../config/database.php';
+require_once __DIR__.'/../../models/categoria.php';
 
 $categoriaModel = new Categoria($conn);
 $categorias = $categoriaModel->getAll();
 
 $titulo = 'Gestión de Categorías';
-require_once __DIR__ . '/../layouts/header.php';
-require_once __DIR__ . '/../layouts/sidebaradmin.php';
+require_once __DIR__.'/../layouts/header.php';
+require_once __DIR__.'/../layouts/sidebaradmin.php';
 ?>
 
 <div class="d-flex flex-column gap-4" style="max-width: 1200px; margin: 0 auto; width: 100%;">
@@ -25,18 +25,20 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
     </div>
 
     <!-- Mensajes -->
-    <?php if (isset($_SESSION['success'])): ?>
+    <?php if (isset($_SESSION['success'])) { ?>
         <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-3" role="alert">
-            <i class="fa-solid fa-check-circle me-2"></i><?= $_SESSION['success']; unset($_SESSION['success']); ?>
+            <i class="fa-solid fa-check-circle me-2"></i><?= $_SESSION['success'];
+        unset($_SESSION['success']); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    <?php endif; ?>
-    <?php if (isset($_SESSION['error'])): ?>
+    <?php } ?>
+    <?php if (isset($_SESSION['error'])) { ?>
         <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-3" role="alert">
-            <i class="fa-solid fa-triangle-exclamation me-2"></i><?= $_SESSION['error']; unset($_SESSION['error']); ?>
+            <i class="fa-solid fa-triangle-exclamation me-2"></i><?= $_SESSION['error'];
+        unset($_SESSION['error']); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    <?php endif; ?>
+    <?php } ?>
 
     <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
         <div class="table-responsive">
@@ -51,26 +53,39 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if ($categorias && $categorias->num_rows > 0): ?>
-                        <?php while($cat = $categorias->fetch_assoc()): ?>
+                    <?php if ($categorias && $categorias->num_rows > 0) { ?>
+                        <?php while ($cat = $categorias->fetch_assoc()) { ?>
                             <tr class="border-bottom">
                                 <td class="px-4 py-3 fw-bold text-dark">#<?= $cat['id_categoria'] ?></td>
                                 <td class="px-4 py-3 fw-semibold text-dark"><?= htmlspecialchars($cat['nombre']) ?></td>
                                 <td class="px-4 py-3 text-muted text-truncate" style="max-width: 250px;"><?= htmlspecialchars($cat['descripcion']) ?></td>
                                 <td class="px-4 py-3">
-                                    <?php if ($cat['estado']): ?>
+                                    <?php if ($cat['estado']) { ?>
                                         <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3 py-2">Activo</span>
-                                    <?php else: ?>
+                                    <?php } else { ?>
                                         <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-3 py-2">Inactivo</span>
-                                    <?php endif; ?>
+                                    <?php } ?>
                                 </td>
-                                <td class="px-4 py-3 text-end">
-                                    <button type="button" class="btn btn-sm btn-light border text-primary me-2 shadow-sm rounded-3" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $cat['id_categoria'] ?>">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </button>
-                                    <a href="../../controllers/CategoriaController.php?action=delete&id=<?= $cat['id_categoria'] ?>" class="btn btn-sm btn-light border text-danger shadow-sm rounded-3" onclick="return confirm('¿Estás seguro de eliminar esta categoría?')">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </a>
+                                <td class="px-4 py-3 text-end table-actions-cell">
+                                    <div class="dropdown action-dropdown">
+                                        <button class="btn-action-trigger" type="button" data-bs-toggle="dropdown" data-bs-boundary="viewport" aria-expanded="false" title="Más opciones">
+                                            <i class="fa-solid fa-ellipsis"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end action-dropdown-menu">
+                                            <li>
+                                                <button type="button" class="action-dropdown-item" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $cat['id_categoria'] ?>">
+                                                    <i class="fa-solid fa-pen"></i>
+                                                    <span>Editar</span>
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <a href="../../controllers/CategoriaController.php?action=delete&id=<?= $cat['id_categoria'] ?>" class="action-dropdown-item item-danger" onclick="return confirm('¿Estás seguro de eliminar esta categoría?')">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                    <span>Eliminar</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </td>
                             </tr>
 
@@ -109,15 +124,15 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
                                 </div>
                             </div>
 
-                        <?php endwhile; ?>
-                    <?php else: ?>
+                        <?php } ?>
+                    <?php } else { ?>
                         <tr>
                             <td colspan="5" class="text-center py-5 text-muted">
                                 <i class="fa-solid fa-folder-open fs-1 opacity-25 mb-3 d-block"></i>
                                 No hay categorías registradas. Comienza agregando una nueva.
                             </td>
                         </tr>
-                    <?php endif; ?>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>
@@ -153,4 +168,4 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
     </div>
 </div>
 
-<?php require_once __DIR__ . '/../layouts/footer.php'; ?>
+<?php require_once __DIR__.'/../layouts/footer.php'; ?>

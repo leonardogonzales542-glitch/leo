@@ -81,13 +81,15 @@ require_once __DIR__ . '/../layouts/sidebaradmin.php';
                                         <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-3 py-1">Bloqueado</span>
                                     <?php endif; ?>
                                 </td>
-                                <td class="px-4 py-3 text-end">
-                                    <button type="button" class="btn btn-sm btn-light border text-primary me-2 shadow-sm rounded-3" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $admin['id_usuario'] ?>">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </button>
-                                    <a href="../../controllers/AdminController.php?action=delete&id=<?= $admin['id_usuario'] ?>" class="btn btn-sm btn-light border text-danger shadow-sm rounded-3" onclick="return confirm('¿Seguro que deseas eliminar este administrador de forma permanente?')">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </a>
+                                <td class="px-4 py-3 text-center" style="width: 110px;">
+                                    <div class="d-flex align-items-center justify-content-center gap-3">
+                                        <button type="button" class="btn-action-clean text-primary" title="Editar" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $admin['id_usuario'] ?>">
+                                            <i class="fa-solid fa-pen" style="color: #3b82f6; font-size: 1.05rem;"></i>
+                                        </button>
+                                        <a href="../../controllers/AdminController.php?action=delete&id=<?= $admin['id_usuario'] ?>" class="btn-action-clean text-danger" title="Eliminar" onclick="return confirm('¿Seguro que deseas eliminar este administrador de forma permanente?')">
+                                            <i class="fa-regular fa-trash-can" style="color: #ef4444; font-size: 1.05rem;"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
 

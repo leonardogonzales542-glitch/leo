@@ -10,9 +10,11 @@ class Usuario extends Authenticatable
     use Notifiable;
 
     protected $table = 'usuarios';
+
     protected $primaryKey = 'id_usuario';
-    
+
     public const CREATED_AT = 'fecha_creacion';
+
     public const UPDATED_AT = null;
 
     protected $fillable = [
@@ -20,11 +22,15 @@ class Usuario extends Authenticatable
         'email',
         'password',
         'id_rol',
-        'estado'
+        'estado',
     ];
 
     protected $hidden = [
         'password',
     ];
-}
 
+    public function rol()
+    {
+        return $this->belongsTo(Rol::class, 'id_rol', 'id_rol');
+    }
+}

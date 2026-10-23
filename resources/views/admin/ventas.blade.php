@@ -9,11 +9,9 @@
             <h3 class="fw-bold text-dark mb-1">Ventas</h3>
             <span class="text-muted small">Panel principal y estadisticas de ventas</span>
         </div>
-        <div>
-            <a href="{{ route('ventas.create') }}" class="btn btn-primary rounded-3 shadow-sm px-4 fw-medium" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%); border: none;">
-                <i class="fa-solid fa-plus me-2"></i>Nueva Venta
+            <a href="{{ route('ventas.create') }}" class="btn btn-primary rounded-3 shadow-sm px-3 py-2 fw-semibold" style="background-color: #2563eb; border-color: #2563eb; font-size: 0.9rem;">
+                <i class="fa-solid fa-plus me-1"></i> Nueva venta
             </a>
-        </div>
     </div>
 
     <!-- Panel de Estadísticas -->
@@ -65,7 +63,7 @@
                             <th>Método</th>
                             <th>Total</th>
                             <th>Estado</th>
-                            <th class="text-end rounded-end">Acciones</th>
+                            <th class="text-center rounded-end" style="width: 110px;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,20 +81,27 @@
                                     <td class="fw-bold text-dark">${{ number_format($v->total, 2) }}</td>
                                     <td>
                                         @if($v->estado == 'ACTIVA')
-                                            <span class="badge bg-success rounded-pill px-3 py-2 fw-medium"><i class="fa-solid fa-check-circle me-1"></i>Activa</span>
+                                            <span class="badge-estado-activo">Activa</span>
                                         @else
-                                            <span class="badge bg-danger rounded-pill px-3 py-2 fw-medium"><i class="fa-solid fa-times-circle me-1"></i>Anulada</span>
+                                            <span class="badge-estado-inactivo">Anulada</span>
                                         @endif
                                     </td>
-                                    <td class="text-end">
-                                        <a href="{{ route('ventas.factura', ['id' => $v->id_venta]) }}" class="btn btn-sm btn-light text-primary shadow-sm rounded-circle me-1" title="Ver Factura">
-                                            <i class="fa-solid fa-file-invoice"></i>
-                                        </a>
-                                        @if($v->estado == 'ACTIVA')
-                                            <button onclick="confirmarAnulacion({{ $v->id_venta }})" class="btn btn-sm btn-light text-danger shadow-sm rounded-circle" title="Anular Venta">
-                                                <i class="fa-solid fa-ban"></i>
+                                    <td class="text-center" style="width: 110px;">
+                                        <div class="d-flex align-items-center justify-content-center gap-3">
+                                            <a href="{{ route('ventas.factura', ['id' => $v->id_venta]) }}" 
+                                               class="btn-action-clean text-primary" 
+                                               title="Ver Factura">
+                                                <i class="fa-solid fa-file-invoice" style="color: #3b82f6; font-size: 1.05rem;"></i>
+                                            </a>
+                                            @if($v->estado == 'ACTIVA')
+                                            <button type="button" 
+                                                onclick="confirmarAnulacion({{ $v->id_venta }})" 
+                                                class="btn-action-clean text-danger" 
+                                                title="Anular Venta">
+                                                <i class="fa-solid fa-ban" style="color: #ef4444; font-size: 1.05rem;"></i>
                                             </button>
-                                        @endif
+                                            @endif
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

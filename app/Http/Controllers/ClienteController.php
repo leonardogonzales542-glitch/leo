@@ -14,14 +14,70 @@ class ClienteController extends Controller
         return view('admin.clientes', compact('clientes'));
     }
 
+    public function checkDuplicate(Request $request)
+    {
+        $field = $request->input('field');
+        $value = trim((string) preg_replace('/\s+/', ' ', (string) $request->input('value')));
+        $excludeId = $request->input('exclude_id');
+
+        if (! in_array($field, ['nombre', 'numero_documento', 'telefono', 'email', 'direccion'], true) || $value === '') {
+            return response()->json(['exists' => false]);
+        }
+
+        $query = DB::table('clientes')->where($field, $value);
+        if ($excludeId) {
+            $query->where('id_cliente', '!=', $excludeId);
+        }
+
+        $exists = $query->exists();
+
+        $nombresCampos = [
+            'nombre' => 'este nombre',
+            'numero_documento' => 'esta CC / documento',
+            'telefono' => 'este número de teléfono',
+            'email' => 'este correo electrónico',
+            'direccion' => 'esta dirección',
+        ];
+
+        return response()->json([
+            'exists' => $exists,
+            'message' => $exists ? 'Ya existe un cliente registrado con '.($nombresCampos[$field] ?? $field).'.' : '',
+        ]);
+    }
+
     public function store(Request $request)
     {
+        $nombre = trim((string) preg_replace('/\s+/', ' ', (string) $request->input('nombre')));
+        $numero_documento = trim((string) preg_replace('/\s+/', ' ', (string) $request->input('numero_documento')));
+        $telefono = trim((string) preg_replace('/\s+/', ' ', (string) $request->input('telefono')));
+        $email = trim((string) $request->input('email'));
+        $direccion = trim((string) preg_replace('/\s+/', ' ', (string) $request->input('direccion')));
+
+        $request->merge([
+            'nombre' => $nombre,
+            'numero_documento' => $numero_documento,
+            'telefono' => $telefono !== '' ? $telefono : null,
+            'email' => $email !== '' ? $email : null,
+            'direccion' => $direccion !== '' ? $direccion : null,
+        ]);
+
         $request->validate([
-            'nombre' => 'required|string|max:255|unique:clientes,nombre',
-            'numero_documento' => 'required|string|max:50|unique:clientes,numero_documento',
+            'nombre' => 'required|string|max:120|unique:clientes,nombre',
+            'tipo_documento' => 'required|string|max:30',
+            'numero_documento' => 'required|string|max:30|unique:clientes,numero_documento',
+            'telefono' => 'nullable|string|max:30|unique:clientes,telefono',
+            'email' => 'nullable|email|max:100|unique:clientes,email',
+            'direccion' => 'nullable|string|max:150|unique:clientes,direccion',
         ], [
-            'nombre.unique' => 'Error: Ya existe un cliente registrado con ese nombre.',
-            'numero_documento.unique' => 'Error: Ya existe un cliente registrado con ese documento (CC).',
+            'nombre.required' => 'El nombre del cliente es obligatorio.',
+            'nombre.unique' => 'Error: Ya existe un cliente registrado con este nombre.',
+            'tipo_documento.required' => 'El tipo de documento es obligatorio.',
+            'numero_documento.required' => 'El número de CC / documento es obligatorio.',
+            'numero_documento.unique' => 'Error: Ya existe un cliente registrado con este número de CC / documento.',
+            'telefono.unique' => 'Error: Ya existe un cliente registrado con este número de teléfono.',
+            'email.email' => 'Por favor ingrese un correo electrónico válido.',
+            'email.unique' => 'Error: Ya existe un cliente registrado con este correo electrónico.',
+            'direccion.unique' => 'Error: Ya existe un cliente registrado con esta dirección.',
         ]);
 
         DB::table('clientes')->insert([
@@ -39,22 +95,51 @@ class ClienteController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nombre' => 'required|string|max:255|unique:clientes,nombre,'.$request->id_cliente.',id_cliente',
-            'numero_documento' => 'required|string|max:50|unique:clientes,numero_documento,'.$request->id_cliente.',id_cliente',
-        ], [
-            'nombre.unique' => 'Error: Ya existe otro cliente registrado con ese nombre.',
-            'numero_documento.unique' => 'Error: Ya existe otro cliente registrado con ese documento (CC).',
+        $id_cliente = $request->input('id_cliente', $id);
+        $nombre = trim((string) preg_replace('/\s+/', ' ', (string) $request->input('nombre')));
+        $numero_documento = trim((string) preg_replace('/\s+/', ' ', (string) $request->input('numero_documento')));
+        $telefono = trim((string) preg_replace('/\s+/', ' ', (string) $request->input('telefono')));
+        $email = trim((string) $request->input('email'));
+        $direccion = trim((string) preg_replace('/\s+/', ' ', (string) $request->input('direccion')));
+
+        $request->merge([
+            'id_cliente' => $id_cliente,
+            'nombre' => $nombre,
+            'numero_documento' => $numero_documento,
+            'telefono' => $telefono !== '' ? $telefono : null,
+            'email' => $email !== '' ? $email : null,
+            'direccion' => $direccion !== '' ? $direccion : null,
         ]);
 
-        DB::table('clientes')->where('id_cliente', $request->id_cliente)->update([
+        $request->validate([
+            'nombre' => 'required|string|max:120|unique:clientes,nombre,'.$id_cliente.',id_cliente',
+            'tipo_documento' => 'required|string|max:30',
+            'numero_documento' => 'required|string|max:30|unique:clientes,numero_documento,'.$id_cliente.',id_cliente',
+            'telefono' => 'nullable|string|max:30|unique:clientes,telefono,'.$id_cliente.',id_cliente',
+            'email' => 'nullable|email|max:100|unique:clientes,email,'.$id_cliente.',id_cliente',
+            'direccion' => 'nullable|string|max:150|unique:clientes,direccion,'.$id_cliente.',id_cliente',
+        ], [
+            'nombre.required' => 'El nombre del cliente es obligatorio.',
+            'nombre.unique' => 'Error: Ya existe otro cliente registrado con este nombre.',
+            'tipo_documento.required' => 'El tipo de documento es obligatorio.',
+            'numero_documento.required' => 'El número de CC / documento es obligatorio.',
+            'numero_documento.unique' => 'Error: Ya existe otro cliente registrado con este número de CC / documento.',
+            'telefono.unique' => 'Error: Ya existe otro cliente registrado con este número de teléfono.',
+            'email.email' => 'Por favor ingrese un correo electrónico válido.',
+            'email.unique' => 'Error: Ya existe otro cliente registrado con este correo electrónico.',
+            'direccion.unique' => 'Error: Ya existe otro cliente registrado con esta dirección.',
+        ]);
+
+        $estado = in_array((string) $request->input('estado'), ['1', 'Activo', 'on', 'true'], true) ? 1 : 0;
+
+        DB::table('clientes')->where('id_cliente', $id_cliente)->update([
             'nombre' => $request->nombre,
             'tipo_documento' => $request->tipo_documento,
             'numero_documento' => $request->numero_documento,
             'telefono' => $request->telefono,
             'email' => $request->email,
             'direccion' => $request->direccion,
-            'estado' => $request->has('estado') ? 1 : 0,
+            'estado' => $estado,
         ]);
 
         return redirect()->route('clientes.index')->with('success', 'Cliente actualizado correctamente.');

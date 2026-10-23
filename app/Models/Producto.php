@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Producto extends Model
 {
     protected $table = 'productos';
+
     protected $primaryKey = 'id_producto';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -22,7 +24,7 @@ class Producto extends Model
         'stock_actual',
         'stock_minimo',
         'estado',
-        'imagen'
+        'imagen',
     ];
 
     public function categoria()

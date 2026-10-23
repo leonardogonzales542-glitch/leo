@@ -42,6 +42,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     // Ventas — endpoints AJAX (deben ir antes del resource para no colisionar con {venta})
     Route::get('ventas/search/productos', [VentaController::class, 'searchProductos'])->name('ventas.search.productos');
     Route::get('ventas/search/clientes', [VentaController::class, 'searchClientes'])->name('ventas.search.clientes');
+    Route::get('clientes/check-duplicate', [ClienteController::class, 'checkDuplicate'])->name('clientes.check.duplicate');
     Route::get('factura', [VentaController::class, 'factura'])->name('ventas.factura');
 
     Route::resource('productos', ProductoController::class);

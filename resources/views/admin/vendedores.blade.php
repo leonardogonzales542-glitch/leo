@@ -58,22 +58,30 @@
                             </td>
                             <td class="px-4 py-3">
                                 @if ($vend->estado === 'Activo')
-                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3 py-1">Acceso Permitido</span>
+                                    <span class="badge-estado-activo">Activo</span>
                                 @else
-                                    <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-3 py-1">Acceso Bloqueado</span>
+                                    <span class="badge-estado-inactivo">Inactivo</span>
                                 @endif
                             </td>
-                            <td class="px-4 py-3 text-end">
-                                <button type="button" class="btn btn-sm btn-light border text-primary me-2 shadow-sm rounded-3"
-                                    data-bs-toggle="modal" data-bs-target="#modalEdit{{ $vend->id_usuario }}">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-                                <form action="{{ route('vendedores.destroy', $vend->id_usuario) }}" method="POST" class="d-inline form-delete">
+                            <td class="px-4 py-3 text-center" style="width: 110px;">
+                                <div class="d-flex align-items-center justify-content-center gap-3">
+                                    <button type="button" 
+                                        class="btn-action-clean text-primary" 
+                                        title="Editar" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#modalEdit{{ $vend->id_usuario }}">
+                                        <i class="fa-solid fa-pen" style="color: #3b82f6; font-size: 1.05rem;"></i>
+                                    </button>
+                                    <button type="button" 
+                                        class="btn-action-clean text-danger" 
+                                        title="Eliminar" 
+                                        onclick="confirmarEliminacion('delete-vend-{{ $vend->id_usuario }}', '¿Eliminar vendedor?', '¿Deseas eliminar a <b>{{ addslashes($vend->usuario) }}</b>?')">
+                                        <i class="fa-regular fa-trash-can" style="color: #ef4444; font-size: 1.05rem;"></i>
+                                    </button>
+                                </div>
+                                <form id="delete-vend-{{ $vend->id_usuario }}" action="{{ route('vendedores.destroy', $vend->id_usuario) }}" method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-light border text-danger shadow-sm rounded-3">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
                                 </form>
                             </td>
                         </tr>

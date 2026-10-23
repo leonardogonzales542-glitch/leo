@@ -551,3 +551,291 @@ table.dataTable thead th {
 [data-bs-theme="dark"] h6 {
     color: #ffffff !important;
 }
+
+/* Modern 3-Dots Action Dropdown */
+.table-actions-cell {
+    width: 60px !important;
+    min-width: 60px !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+    padding-right: 1.25rem !important;
+}
+
+.table-actions-wrapper {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 4px !important;
+    white-space: nowrap !important;
+}
+
+.action-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.btn-action-trigger {
+    width: 36px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 8px !important;
+    border: none !important;
+    background-color: transparent !important;
+    color: #475569 !important;
+    font-size: 1.15rem !important;
+    transition: all 0.15s ease !important;
+    cursor: pointer !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.btn-action-trigger:hover,
+.btn-action-trigger:focus,
+.btn-action-trigger.show,
+.btn-action-trigger[aria-expanded="true"] {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+}
+
+.action-dropdown-menu {
+    min-width: 165px !important;
+    padding: 6px !important;
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04) !important;
+    z-index: 1060 !important;
+    margin-top: 4px !important;
+    animation: fadeInDropdown 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInDropdown {
+    from {
+        opacity: 0;
+        transform: translateY(-4px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.action-dropdown-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    color: #334155 !important;
+    text-decoration: none !important;
+    background: transparent !important;
+    border: none !important;
+    width: 100% !important;
+    text-align: left !important;
+    cursor: pointer !important;
+    transition: background-color 0.15s ease, color 0.15s ease !important;
+}
+
+.action-dropdown-item i {
+    width: 16px !important;
+    font-size: 0.95rem !important;
+    color: #64748b !important;
+    text-align: center !important;
+    flex-shrink: 0 !important;
+    transition: color 0.15s ease !important;
+}
+
+.action-dropdown-item:hover {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+}
+
+.action-dropdown-item:hover i {
+    color: #0f172a !important;
+}
+
+/* Danger / Delete Item */
+.action-dropdown-item.item-danger {
+    color: #ef4444 !important;
+}
+
+.action-dropdown-item.item-danger i {
+    color: #ef4444 !important;
+}
+
+.action-dropdown-item.item-danger:hover {
+    background-color: #fef2f2 !important;
+    color: #dc2626 !important;
+}
+
+.action-dropdown-item.item-danger:hover i {
+    color: #dc2626 !important;
+}
+
+/* Fallback / Inline action buttons */
+.btn-action {
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 5px !important;
+    border: none !important;
+    background-color: transparent !important;
+    color: #4b5563 !important;
+    font-size: 0.95rem !important;
+    transition: background-color 0.15s ease, color 0.15s ease !important;
+    cursor: pointer !important;
+    box-shadow: none !important;
+    flex-shrink: 0 !important;
+    text-decoration: none !important;
+    line-height: 1 !important;
+}
+
+.btn-action:hover {
+    background-color: #e5e7eb !important;
+    color: #111827 !important;
+}
+
+/* Dark mode support */
+[data-bs-theme="dark"] .btn-action-trigger {
+    color: #94a3b8 !important;
+}
+
+[data-bs-theme="dark"] .btn-action-trigger:hover,
+[data-bs-theme="dark"] .btn-action-trigger.show,
+[data-bs-theme="dark"] .btn-action-trigger[aria-expanded="true"] {
+    background-color: #1e293b !important;
+    color: #f8fafc !important;
+}
+
+[data-bs-theme="dark"] .action-dropdown-menu {
+    background-color: #0f172a !important;
+    border-color: #1e293b !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-bs-theme="dark"] .action-dropdown-item {
+    color: #cbd5e1 !important;
+}
+
+[data-bs-theme="dark"] .action-dropdown-item i {
+    color: #94a3b8 !important;
+}
+
+[data-bs-theme="dark"] .action-dropdown-item:hover {
+    background-color: #1e293b !important;
+    color: #f8fafc !important;
+}
+
+[data-bs-theme="dark"] .action-dropdown-item.item-danger {
+    color: #f87171 !important;
+}
+
+[data-bs-theme="dark"] .action-dropdown-item.item-danger i {
+    color: #f87171 !important;
+}
+
+[data-bs-theme="dark"] .action-dropdown-item.item-danger:hover {
+    background-color: rgba(239, 68, 68, 0.15) !important;
+    color: #ef4444 !important;
+}
+
+/* Acciones directas (Iconos Editar y Eliminar) */
+.btn-action-clean {
+    background: transparent;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.btn-action-clean:hover {
+    transform: scale(1.15);
+    opacity: 0.85;
+}
+
+.badge-estado-activo {
+    display: inline-block;
+    background-color: #dcfce7;
+    color: #16a34a;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 9999px;
+    line-height: 1.4;
+}
+
+.badge-estado-inactivo {
+    display: inline-block;
+    background-color: #e2e8f0;
+    color: #64748b;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 9999px;
+    line-height: 1.4;
+}
+
+/* ===================================================
+   MOBILE FINTECH APP ENHANCEMENTS (PWA / iOS 18 FEEL)
+   =================================================== */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+[data-bs-theme="dark"] body {
+    background-color: #0b0f19 !important;
+}
+
+[data-bs-theme="dark"] .bg-body {
+    background-color: #0b0f19 !important;
+}
+
+[data-bs-theme="dark"] .bg-body-tertiary {
+    background-color: rgba(15, 23, 42, 0.85) !important;
+}
+
+[data-bs-theme="dark"] .border,
+[data-bs-theme="dark"] .border-bottom,
+[data-bs-theme="dark"] .border-end {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Balance hiding transition */
+[data-balance-value] {
+    transition: filter 0.25s ease, opacity 0.25s ease;
+}
+
+.balance-masked {
+    letter-spacing: 2px;
+    user-select: none;
+    opacity: 0.8;
+}
+
+/* Smooth mobile scrolling */
+@media (max-width: 991.98px) {
+    body {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .app-content-body {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+        padding-top: 14px !important;
+        padding-bottom: 95px !important;
+    }
+}
+
+
+

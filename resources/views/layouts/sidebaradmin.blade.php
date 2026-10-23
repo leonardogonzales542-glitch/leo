@@ -163,8 +163,8 @@ $currentRoute = request()->route()?->getName() ?? '';
             <span>Agregar producto</span>
         </a>
         <a href="{{ route('usuarios.index') }}" class="sidebar-link d-flex align-items-center gap-3 text-decoration-none mb-1 {{ request()->routeIs('usuarios.*') ? 'active-link' : '' }}">
-            <i class="fa-solid fa-user-shield"></i>
-            <span>Administrar</span>
+            <i class="fa-solid fa-users-gear"></i>
+            <span>Usuarios</span>
         </a>
         <a href="{{ route('cupones.index') }}" class="sidebar-link d-flex align-items-center gap-3 text-decoration-none mb-1 {{ request()->routeIs('cupones.*') ? 'active-link' : '' }}">
             <i class="fa-solid fa-ticket"></i>
@@ -195,99 +195,82 @@ $currentRoute = request()->route()?->getName() ?? '';
 <div id="sidebarBackdrop" class="sidebar-backdrop"></div>
 
 <main class="flex-grow-1 d-flex flex-column min-vh-100 bg-body" style="min-width: 0;">
-    <!-- Top Header -->
-    <header class="d-flex align-items-center justify-content-between px-4 py-3 bg-body-tertiary border-bottom position-sticky top-0" style="z-index: 1020;">
-        <!-- Botón hamburguesa — solo visible en móvil -->
-        <button id="openSidebarBtn" class="btn btn-sm btn-light border d-lg-none" type="button" aria-label="Abrir menú">
-            <i class="fa-solid fa-bars fs-5 text-secondary"></i>
-        </button>
-        <div class="d-flex align-items-center gap-4">
-            <!-- Color Home Toggle -->
-            <div id="colorHomeToggle" class="d-flex align-items-center gap-2 border rounded-pill px-3 py-1 bg-light text-muted" style="cursor: pointer; transition: all 0.3s;">
-                <i class="fa-solid fa-moon" id="colorIcon" style="font-size: 0.8rem;"></i>
-                <span id="colorHomeText" style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px;">TEMA CLARO</span>
-                <span id="colorHomeCircle" class="rounded-circle border shadow-sm bg-dark" style="width: 14px; height: 14px; margin-left: 5px; transition: all 0.3s;"></span>
-            </div>
-            
-            <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const toggle = document.getElementById('colorHomeToggle');
-                const text = document.getElementById('colorHomeText');
-                const circle = document.getElementById('colorHomeCircle');
-                const icon = document.getElementById('colorIcon');
-                
-                function setDarkMode(isDark) {
-                    if (isDark) {
-                        document.documentElement.setAttribute('data-bs-theme', 'dark');
-                        text.innerText = 'TEMA OSCURO';
-                        circle.className = 'rounded-circle border shadow-sm bg-light';
-                        icon.className = 'fa-solid fa-sun';
-                        
-                        // Fallback manual toggle for elements that might have hardcoded bg-white
-                        document.querySelectorAll('.bg-white, .text-dark').forEach(el => {
-                            if (!el.id.includes('colorHomeCircle') && !el.closest('header') && !el.closest('aside')) {
-                                if (el.classList.contains('bg-white')) {
-                                    el.classList.remove('bg-white');
-                                    el.classList.add('bg-dark', 'text-light', 'was-bg-white');
-                                }
-                                if (el.classList.contains('text-dark')) {
-                                    el.classList.remove('text-dark');
-                                    el.classList.add('text-body', 'was-text-dark');
-                                }
-                            }
-                        });
-                    } else {
-                        document.documentElement.setAttribute('data-bs-theme', 'light');
-                        text.innerText = 'TEMA CLARO';
-                        circle.className = 'rounded-circle border shadow-sm bg-dark';
-                        icon.className = 'fa-solid fa-moon';
-                        
-                        // Revert fallback manual toggle
-                        document.querySelectorAll('.was-bg-white, .was-text-dark').forEach(el => {
-                            if (el.classList.contains('was-bg-white')) {
-                                el.classList.remove('bg-dark', 'text-light', 'was-bg-white');
-                                el.classList.add('bg-white');
-                            }
-                            if (el.classList.contains('was-text-dark')) {
-                                el.classList.remove('text-body', 'was-text-dark');
-                                el.classList.add('text-dark');
-                            }
-                        });
-                    }
-                }
-
-                // Load saved preference
-                const savedTheme = localStorage.getItem('themeColor');
-                const isDark = savedTheme === 'dark';
-                setDarkMode(isDark);
-
-                toggle.addEventListener('click', function() {
-                    const currentlyDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
-                    localStorage.setItem('themeColor', currentlyDark ? 'light' : 'dark');
-                    setDarkMode(!currentlyDark);
-                });
-            });
-            </script>
-            
-            <!-- User Profile Dropdown -->
-            <div class="d-flex align-items-center gap-3 border rounded-pill px-3 py-1 bg-body-tertiary" style="cursor: pointer;">
-                <span class="fw-bold text-body" style="font-size: 0.85rem;">{{ $rol_nombre }}</span>
-                <div class="rounded-circle border d-flex align-items-center justify-content-center fw-bold shadow-sm" style="background-color: var(--bs-tertiary-bg); color: var(--bs-body-color); width: 26px; height: 26px; font-size: 12px;">
-                    {{ strtoupper(substr($nombreCompleto, 0, 1)) }}
+    <!-- Top Header (Dual Responsive: Native App Header on Mobile, Dashboard Bar on Desktop) -->
+    <header class="d-flex align-items-center justify-content-between px-3 px-md-4 py-2 py-md-3 bg-body-tertiary border-bottom position-sticky top-0" style="z-index: 1020;">
+        
+        <!-- Mobile App Bar (Exact match to video screenshot) -->
+        <div class="d-flex d-lg-none align-items-center justify-content-between w-100">
+            <!-- Left: User Badge / Brand Avatar -->
+            <div class="d-flex align-items-center gap-2">
+                <div class="rounded-circle d-flex align-items-center justify-content-center text-white shadow-sm" style="width: 36px; height: 36px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                    <i class="fa-solid fa-chart-line" style="font-size: 0.95rem;"></i>
+                </div>
+                <div class="d-flex flex-column leading-tight">
+                    <span class="fw-bold text-body" style="font-size: 0.95rem; line-height: 1.1;">{{ explode(' ', $nombreCompleto)[0] }}</span>
+                    <span class="text-success" style="font-size: 0.68rem; font-weight: 600;">{{ $rol_nombre }}</span>
                 </div>
             </div>
-            
-            <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                @csrf
-                <button type="submit" class="btn btn-link text-danger ms-2 p-0" title="Cerrar sesión">
-                    <i class="fa-solid fa-power-off fs-5"></i>
+
+            <!-- Right: Action Buttons (Eye hide balance, Theme, Logout) -->
+            <div class="d-flex align-items-center gap-2">
+                <!-- Eye Toggle (Hide/Show balances) -->
+                <button type="button" id="mobileEyeToggleBtn" class="btn btn-sm btn-light border rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 36px; height: 36px;" title="Ocultar / Mostrar montos">
+                    <i class="fa-solid fa-eye text-body" id="mobileEyeIcon" style="font-size: 0.9rem;"></i>
                 </button>
-            </form>
+
+                <!-- Theme Toggle -->
+                <button type="button" id="mobileThemeToggleBtn" class="btn btn-sm btn-light border rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 36px; height: 36px;" title="Cambiar tema">
+                    <i class="fa-solid fa-moon text-body" id="mobileThemeIcon" style="font-size: 0.9rem;"></i>
+                </button>
+
+                <!-- Logout -->
+                <form action="{{ route('logout') }}" method="POST" class="d-inline m-0">
+                    @csrf
+                    <button type="submit" class="btn btn-sm btn-light border rounded-circle d-flex align-items-center justify-content-center text-danger shadow-sm" style="width: 36px; height: 36px;" title="Cerrar sesión">
+                        <i class="fa-solid fa-power-off" style="font-size: 0.85rem;"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Desktop Header Bar -->
+        <div class="d-none d-lg-flex align-items-center justify-content-between w-100">
+            <div class="d-flex align-items-center gap-3">
+                <!-- Eye Toggle Desktop -->
+                <button type="button" id="desktopEyeToggleBtn" class="btn btn-sm btn-light border rounded-pill px-3 py-1 d-flex align-items-center gap-2 shadow-sm text-body" title="Ocultar o mostrar montos">
+                    <i class="fa-solid fa-eye" id="desktopEyeIcon" style="font-size: 0.85rem;"></i>
+                    <span style="font-size: 0.75rem; font-weight: 700;">SALDOS</span>
+                </button>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+                <!-- Color Home Toggle Desktop -->
+                <div id="colorHomeToggle" class="d-flex align-items-center gap-2 border rounded-pill px-3 py-1 bg-light text-muted" style="cursor: pointer; transition: all 0.3s;">
+                    <i class="fa-solid fa-moon" id="colorIcon" style="font-size: 0.8rem;"></i>
+                    <span id="colorHomeText" style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px;">TEMA OSCURO</span>
+                    <span id="colorHomeCircle" class="rounded-circle border shadow-sm bg-light" style="width: 14px; height: 14px; margin-left: 5px; transition: all 0.3s;"></span>
+                </div>
+                
+                <!-- User Profile Dropdown -->
+                <div class="d-flex align-items-center gap-2 border rounded-pill px-3 py-1 bg-body-tertiary" style="cursor: pointer;">
+                    <span class="fw-bold text-body" style="font-size: 0.85rem;">{{ $rol_nombre }}</span>
+                    <div class="rounded-circle border d-flex align-items-center justify-content-center fw-bold shadow-sm" style="background-color: var(--bs-tertiary-bg); color: var(--bs-body-color); width: 26px; height: 26px; font-size: 12px;">
+                        {{ strtoupper(substr($nombreCompleto, 0, 1)) }}
+                    </div>
+                </div>
+                
+                <form action="{{ route('logout') }}" method="POST" class="d-inline m-0">
+                    @csrf
+                    <button type="submit" class="btn btn-link text-danger ms-2 p-0" title="Cerrar sesión">
+                        <i class="fa-solid fa-power-off fs-5"></i>
+                    </button>
+                </form>
+            </div>
         </div>
     </header>
 
     <!-- Content Area Wrapper -->
-    <div class="p-4 p-lg-5 flex-grow-1">
+    <div class="p-3 p-md-4 p-lg-5 flex-grow-1 app-content-body">
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -296,27 +279,104 @@ document.addEventListener('DOMContentLoaded', function () {
     var openBtn    = document.getElementById('openSidebarBtn');
     var closeBtn   = document.getElementById('closeSidebarBtn');
 
-    function openSidebar() {
+    window.openAdminSidebar = function() {
+        if (!sidebar) return;
         sidebar.classList.add('show-sidebar');
-        backdrop.classList.add('show');
+        if (backdrop) backdrop.classList.add('show');
         document.body.style.overflow = 'hidden';
-    }
+    };
 
-    function closeSidebar() {
+    window.closeAdminSidebar = function() {
+        if (!sidebar) return;
         sidebar.classList.remove('show-sidebar');
-        backdrop.classList.remove('show');
+        if (backdrop) backdrop.classList.remove('show');
         document.body.style.overflow = '';
-    }
+    };
 
-    if (openBtn) { openBtn.addEventListener('click', openSidebar); }
-    if (closeBtn) { closeBtn.addEventListener('click', closeSidebar); }
-    if (backdrop) { backdrop.addEventListener('click', closeSidebar); }
+    if (openBtn) { openBtn.addEventListener('click', window.openAdminSidebar); }
+    if (closeBtn) { closeBtn.addEventListener('click', window.closeAdminSidebar); }
+    if (backdrop) { backdrop.addEventListener('click', window.closeAdminSidebar); }
 
-    // Cerrar al navegar a un enlace en móvil
-    sidebar.querySelectorAll('a.sidebar-link').forEach(function (link) {
+    sidebar?.querySelectorAll('a.sidebar-link').forEach(function (link) {
         link.addEventListener('click', function () {
-            if (window.innerWidth < 992) { closeSidebar(); }
+            if (window.innerWidth < 992) { window.closeAdminSidebar(); }
         });
     });
+
+    // Theme Switcher Logic
+    const toggleDesktop = document.getElementById('colorHomeToggle');
+    const toggleMobile  = document.getElementById('mobileThemeToggleBtn');
+    const textDesktop   = document.getElementById('colorHomeText');
+    const circleDesktop = document.getElementById('colorHomeCircle');
+    const iconDesktop   = document.getElementById('colorIcon');
+    const iconMobile    = document.getElementById('mobileThemeIcon');
+
+    function applyTheme(isDark) {
+        if (isDark) {
+            document.documentElement.setAttribute('data-bs-theme', 'dark');
+            if (textDesktop) textDesktop.innerText = 'TEMA OSCURO';
+            if (circleDesktop) circleDesktop.className = 'rounded-circle border shadow-sm bg-light';
+            if (iconDesktop) iconDesktop.className = 'fa-solid fa-sun';
+            if (iconMobile) iconMobile.className = 'fa-solid fa-sun';
+        } else {
+            document.documentElement.setAttribute('data-bs-theme', 'light');
+            if (textDesktop) textDesktop.innerText = 'TEMA CLARO';
+            if (circleDesktop) circleDesktop.className = 'rounded-circle border shadow-sm bg-dark';
+            if (iconDesktop) iconDesktop.className = 'fa-solid fa-moon';
+            if (iconMobile) iconMobile.className = 'fa-solid fa-moon';
+        }
+    }
+
+    const savedTheme = localStorage.getItem('themeColor') || 'dark';
+    applyTheme(savedTheme === 'dark');
+
+    function toggleTheme() {
+        const currentlyDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+        const newTheme = currentlyDark ? 'light' : 'dark';
+        localStorage.setItem('themeColor', newTheme);
+        applyTheme(!currentlyDark);
+        window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: newTheme } }));
+    }
+
+    toggleDesktop?.addEventListener('click', toggleTheme);
+    toggleMobile?.addEventListener('click', toggleTheme);
+
+    // Eye Balance Visibility (Hide/Show Amounts)
+    let hideBalances = localStorage.getItem('hideFinancialBalances') === 'true';
+    const mobileEyeBtn  = document.getElementById('mobileEyeToggleBtn');
+    const mobileEyeIcon = document.getElementById('mobileEyeIcon');
+    const deskEyeBtn    = document.getElementById('desktopEyeToggleBtn');
+    const deskEyeIcon   = document.getElementById('desktopEyeIcon');
+
+    function updateBalanceEyeUI(hidden) {
+        const iconClass = hidden ? 'fa-solid fa-eye-slash text-danger' : 'fa-solid fa-eye text-body';
+        if (mobileEyeIcon) mobileEyeIcon.className = iconClass;
+        if (deskEyeIcon) deskEyeIcon.className = iconClass;
+
+        document.querySelectorAll('[data-balance-value]').forEach(el => {
+            const realVal = el.getAttribute('data-balance-value');
+            if (hidden) {
+                el.setAttribute('data-visible-text', el.innerText);
+                el.innerText = '••••••••';
+                el.classList.add('balance-masked');
+            } else {
+                el.innerText = realVal;
+                el.classList.remove('balance-masked');
+            }
+        });
+    }
+
+    function toggleBalances() {
+        hideBalances = !hideBalances;
+        localStorage.setItem('hideFinancialBalances', hideBalances);
+        updateBalanceEyeUI(hideBalances);
+        window.dispatchEvent(new CustomEvent('balanceToggled', { detail: { hidden: hideBalances } }));
+    }
+
+    mobileEyeBtn?.addEventListener('click', toggleBalances);
+    deskEyeBtn?.addEventListener('click', toggleBalances);
+
+    // Apply on load
+    updateBalanceEyeUI(hideBalances);
 });
 </script>

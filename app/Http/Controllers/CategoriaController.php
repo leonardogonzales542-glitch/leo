@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Models\Categoria;
+use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
 {
     public function index()
     {
         $categorias = Categoria::all();
+
         return view('admin.categorias', compact('categorias'));
     }
 
@@ -18,7 +18,7 @@ class CategoriaController extends Controller
     {
         $data = $request->validate([
             'nombre' => 'required|string|max:100',
-            'descripcion' => 'nullable|string'
+            'descripcion' => 'nullable|string',
         ]);
 
         $data['estado'] = $request->has('estado');
@@ -34,7 +34,7 @@ class CategoriaController extends Controller
 
         $data = $request->validate([
             'nombre' => 'required|string|max:100',
-            'descripcion' => 'nullable|string'
+            'descripcion' => 'nullable|string',
         ]);
 
         $data['estado'] = $request->has('estado');
@@ -48,6 +48,7 @@ class CategoriaController extends Controller
     {
         try {
             Categoria::destroy($id);
+
             return redirect()->route('categorias.index')->with('success', 'Categoría eliminada.');
         } catch (\Exception $e) {
             return redirect()->route('categorias.index')->with('error', 'No se puede eliminar porque hay productos usando esta categoría.');

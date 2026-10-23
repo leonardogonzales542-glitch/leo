@@ -46,8 +46,7 @@
                                 <th class="border-0 px-4 py-3 text-muted small fw-bold text-uppercase">Teléfono</th>
                                 <th class="border-0 px-4 py-3 text-muted small fw-bold text-uppercase">Email</th>
                                 <th class="border-0 px-4 py-3 text-muted small fw-bold text-uppercase">Estado</th>
-                                <th class="border-0 px-4 py-3 text-muted small fw-bold text-uppercase text-center">Editar</th>
-                                <th class="border-0 px-4 py-3 text-muted small fw-bold text-uppercase text-center">Eliminar</th>
+                                <th class="border-0 px-4 py-3 text-muted small fw-bold text-uppercase text-end table-actions-cell">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,27 +69,29 @@
                                          </span>
                                       @endif
                                 </td>
-                                <td class="px-4 py-3 text-center">
-                                    <button type="button"
-                                        class="btn btn-outline-success btn-sm rounded-circle d-flex align-items-center justify-content-center border-0 mx-auto btn-editar"
-                                        style="width: 35px; height: 35px;"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#modalEditarProveedor"
-                                        data-id="{{ $proveedor->id_proveedor ?? '' }}"
-                                        data-razon_social="{{ $proveedor->razon_social ?? '' }}"
-                                        data-email="{{ $proveedor->email ?? '' }}"
-                                        data-telefono="{{ $proveedor->telefono ?? '' }}"
-                                        data-direccion="{{ $proveedor->direccion ?? '' }}"
-                                        data-nit="{{ $proveedor->nit ?? '' }}"
-                                        data-estado="{{ $proveedor->estado ?? '' }}"
-                                        title="Editar">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </button>
-                                </td>
-                                <td class="px-4 py-3 text-center">
-                                    <button type="button" class="btn btn-outline-danger btn-sm rounded-circle d-flex align-items-center justify-content-center border-0 mx-auto deletebtn" data-id="{{ $proveedor->id_proveedor ?? '' }}" style="width: 35px; height: 35px;" title="Eliminar">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                    </button>
+                                <td class="px-4 py-3 text-center" style="width: 110px;">
+                                    <div class="d-flex align-items-center justify-content-center gap-3">
+                                        <button type="button"
+                                            class="btn-action-clean text-primary btn-editar"
+                                            title="Editar"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalEditarProveedor"
+                                            data-id="{{ $proveedor->id_proveedor ?? '' }}"
+                                            data-razon_social="{{ $proveedor->razon_social ?? '' }}"
+                                            data-email="{{ $proveedor->email ?? '' }}"
+                                            data-telefono="{{ $proveedor->telefono ?? '' }}"
+                                            data-direccion="{{ $proveedor->direccion ?? '' }}"
+                                            data-nit="{{ $proveedor->nit ?? '' }}"
+                                            data-estado="{{ $proveedor->estado ?? '' }}">
+                                            <i class="fa-solid fa-pen" style="color: #3b82f6; font-size: 1.05rem;"></i>
+                                        </button>
+                                        <button type="button" 
+                                            class="btn-action-clean text-danger deletebtn" 
+                                            title="Eliminar"
+                                            data-id="{{ $proveedor->id_proveedor ?? '' }}">
+                                            <i class="fa-regular fa-trash-can" style="color: #ef4444; font-size: 1.05rem;"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
@@ -331,7 +332,7 @@
             responsive: false,
             pageLength: 10,
             columnDefs: [
-                { orderable: false, targets: [6, 7] }
+                { orderable: false, targets: [7] }
             ]
         });
 
