@@ -17,6 +17,21 @@ class UsuarioController extends Controller
         return view('admin.gusuarios', compact('usuarios', 'roles', 'estados'));
     }
 
+    public function create()
+    {
+        return redirect()->route('usuarios.index');
+    }
+
+    public function show($id)
+    {
+        return redirect()->route('usuarios.index');
+    }
+
+    public function edit($id)
+    {
+        return redirect()->route('usuarios.index');
+    }
+
     public function store(Request $request)
     {
         $id_rol = $request->input('id_rol', $request->input('rol'));

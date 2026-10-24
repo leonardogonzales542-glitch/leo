@@ -18,6 +18,21 @@ class ProveedorController extends Controller
         return view('admin.proveedores', compact('proveedores', 'estados'));
     }
 
+    public function create()
+    {
+        return redirect()->route('proveedores.index');
+    }
+
+    public function show($id)
+    {
+        return redirect()->route('proveedores.index');
+    }
+
+    public function edit($id)
+    {
+        return redirect()->route('proveedores.index');
+    }
+
     public function store(Request $request)
     {
         DB::table('proveedores')->insert([

@@ -14,6 +14,32 @@ class ClienteController extends Controller
         return view('admin.clientes', compact('clientes'));
     }
 
+    public function create()
+    {
+        $clientes = DB::table('clientes')->orderByDesc('id_cliente')->get();
+        $autoOpenCreate = true;
+
+        return view('admin.clientes', compact('clientes', 'autoOpenCreate'));
+    }
+
+    public function show($id)
+    {
+        return redirect()->route('clientes.index');
+    }
+
+    public function edit($id)
+    {
+        $cliente = DB::table('clientes')->where('id_cliente', $id)->first();
+        if (! $cliente) {
+            return redirect()->route('clientes.index')->with('error', 'Cliente no encontrado.');
+        }
+
+        $clientes = DB::table('clientes')->orderByDesc('id_cliente')->get();
+        $autoOpenEdit = $cliente;
+
+        return view('admin.clientes', compact('clientes', 'autoOpenEdit'));
+    }
+
     public function checkDuplicate(Request $request)
     {
         $field = $request->input('field');

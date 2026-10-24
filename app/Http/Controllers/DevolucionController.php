@@ -18,6 +18,21 @@ class DevolucionController extends Controller
         return view('admin.devoluciones', compact('devoluciones'));
     }
 
+    public function create()
+    {
+        return redirect()->route('devoluciones.index');
+    }
+
+    public function show($id)
+    {
+        return redirect()->route('devoluciones.index');
+    }
+
+    public function edit($id)
+    {
+        return redirect()->route('devoluciones.index');
+    }
+
     public function store(Request $request)
     {
         $request->validate([

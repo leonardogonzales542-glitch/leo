@@ -16,6 +16,21 @@ class ConfiguracionController extends Controller
         return view('admin.configuracion', compact('config'));
     }
 
+    public function create(): RedirectResponse
+    {
+        return redirect()->route('configuracion.index');
+    }
+
+    public function show(int $id): RedirectResponse
+    {
+        return redirect()->route('configuracion.index');
+    }
+
+    public function edit(int $id): RedirectResponse
+    {
+        return redirect()->route('configuracion.index');
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([

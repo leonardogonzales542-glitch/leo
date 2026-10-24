@@ -14,6 +14,21 @@ class CategoriaController extends Controller
         return view('admin.categorias', compact('categorias'));
     }
 
+    public function create()
+    {
+        return redirect()->route('categorias.index');
+    }
+
+    public function show($id)
+    {
+        return redirect()->route('categorias.index');
+    }
+
+    public function edit($id)
+    {
+        return redirect()->route('categorias.index');
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([

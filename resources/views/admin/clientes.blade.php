@@ -460,6 +460,30 @@
             });
         });
 
+        // Auto-abrir modal de creación si se accedió desde /admin/clientes/create o con ?create=1
+        @if(!empty($autoOpenCreate) || request()->has('create'))
+            const modalCreateEl = document.getElementById('modalCreate');
+            if (modalCreateEl && typeof bootstrap !== 'undefined') {
+                const modalCreateInstance = new bootstrap.Modal(modalCreateEl);
+                modalCreateInstance.show();
+            }
+        @endif
+
+        // Auto-abrir modal de edición si se solicitó edición por ruta
+        @if(!empty($autoOpenEdit))
+            const editCli = @json($autoOpenEdit);
+            document.getElementById('formEditCliente').action = `/admin/clientes/${editCli.id_cliente}`;
+            document.getElementById('edit_id_cliente').value = editCli.id_cliente;
+            document.getElementById('edit_nombre').value = editCli.nombre || '';
+            document.getElementById('edit_tipo_documento').value = editCli.tipo_documento || 'CC';
+            document.getElementById('edit_numero_documento').value = editCli.numero_documento || '';
+            document.getElementById('edit_telefono').value = editCli.telefono || '';
+            document.getElementById('edit_email').value = editCli.email || '';
+            document.getElementById('edit_direccion').value = editCli.direccion || '';
+            document.getElementById('edit_estado').value = (editCli.estado == '1' || editCli.estado === 1) ? '1' : '0';
+            modalEditCliente.show();
+        @endif
+
         // Configuración de eliminación con SweetAlert2
         document.querySelectorAll('.btn-eliminar-cli').forEach(button => {
             button.addEventListener('click', function() {

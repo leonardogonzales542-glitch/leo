@@ -16,6 +16,21 @@ class CuponController extends Controller
         return view('admin.cupones', compact('cupones'));
     }
 
+    public function create(): RedirectResponse
+    {
+        return redirect()->route('cupones.index');
+    }
+
+    public function show(int $id): RedirectResponse
+    {
+        return redirect()->route('cupones.index');
+    }
+
+    public function edit(int $id): RedirectResponse
+    {
+        return redirect()->route('cupones.index');
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([

@@ -127,7 +127,10 @@
         
         @if(auth()->check())
         </div>{{-- cierra .p-4.p-lg-5.app-content-body abierto en sidebaradmin --}}
+        @include('layouts.footer')
         </main>{{-- cierra <main> abierto en sidebaradmin --}}
+        @else
+        @include('layouts.footer')
         @endif
         
     </div>

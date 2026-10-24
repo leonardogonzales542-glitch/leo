@@ -19,6 +19,21 @@ class VendedorController extends Controller
         return view('admin.vendedores', compact('vendedores'));
     }
 
+    public function create(): RedirectResponse
+    {
+        return redirect()->route('vendedores.index');
+    }
+
+    public function show(int $id): RedirectResponse
+    {
+        return redirect()->route('vendedores.index');
+    }
+
+    public function edit(int $id): RedirectResponse
+    {
+        return redirect()->route('vendedores.index');
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
